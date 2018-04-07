@@ -26,14 +26,19 @@
         <e p="AddRemoveSecurityRegressionAlgorithm.cs" t="Include" />
         <e p="app.config" t="Include" />
         <e p="BasicTemplateAlgorithm.cs" t="Include" />
+        <e p="BasicTemplateCryptoAlgorithm.cs" t="Include" />
+        <e p="BasicTemplateCryptoFrameworkAlgorithm.cs" t="Include" />
         <e p="BasicTemplateDailyAlgorithm.cs" t="Include" />
         <e p="BasicTemplateFillForwardAlgorithm.cs" t="Include" />
         <e p="BasicTemplateForexAlgorithm.cs" t="Include" />
+        <e p="BasicTemplateFrameworkAlgorithm.cs" t="Include" />
         <e p="BasicTemplateFuturesAlgorithm.cs" t="Include" />
         <e p="BasicTemplateFuturesAlgorithmDaily.cs" t="Include" />
         <e p="BasicTemplateFuturesConsolidationAlgorithm.cs" t="Include" />
         <e p="BasicTemplateFuturesHistoryAlgorithm.cs" t="Include" />
         <e p="BasicTemplateFxcmVolumeAlgorithm.cs" t="Include" />
+        <e p="BasicTemplateIntrinioEconomicData.cs" t="Include" />
+        <e p="BasicTemplateLibrary.cs" t="Include" />
         <e p="BasicTemplateMultiAssetAlgorithm.cs" t="Include" />
         <e p="BasicTemplateOptionsAlgorithm.cs" t="Include" />
         <e p="BasicTemplateOptionsFilterUniverseAlgorithm.cs" t="Include" />
@@ -41,24 +46,27 @@
         <e p="BasicTemplateOptionStrategyAlgorithm.cs" t="Include" />
         <e p="BasicTemplateOptionTradesAlgorithm.cs" t="Include" />
         <e p="Benchmarks" t="Include">
-          <e p="EmptyMinute400EquityAlgorithm.cs" t="Include" />
-          <e p="Symbols.cs" t="Include" />
+          <e p="BasicTemplateBenchmark.cs" t="Include" />
+          <e p="EmptyMinute400EquityBenchmark.cs" t="Include" />
+          <e p="EmptySingleSecuritySecondEquityBenchmark.cs" t="Include" />
         </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="BrokerageModelAlgorithm.cs" t="Include" />
         <e p="BubbleAlgorithm.cs" t="Include" />
-        <e p="ButtomReversalAlgorithm.cs" t="Include" />
         <e p="CallingRFromCSharp.cs" t="Include" />
         <e p="CoarseFineFundamentalComboAlgorithm.cs" t="Include" />
         <e p="CoarseFineFundamentalRegressionAlgorithm.cs" t="Include" />
         <e p="CoarseUniverseTop5DollarVolumeAlgorithm.cs" t="Include" />
+        <e p="ConstituentsQC500GeneratorAlgorithm.cs" t="Include" />
         <e p="CustomBenchmarkAlgorithm.cs" t="Include" />
         <e p="CustomBrokerageMessageHandlerAlgorithm.cs" t="Include" />
         <e p="CustomChartingAlgorithm.cs" t="Include" />
         <e p="CustomDataBitcoinAlgorithm.cs" t="Include" />
+        <e p="CustomDataIndicatorExtensionsAlgorithm.cs" t="Include" />
         <e p="CustomDataNIFTYAlgorithm.cs" t="Include" />
         <e p="CustomDataRegressionAlgorithm.cs" t="Include" />
         <e p="CustomDataUniverseAlgorithm.cs" t="Include" />
+        <e p="CustomFrameworkModelsAlgorithm.cs" t="Include" />
         <e p="CustomModelsAlgorithm.cs" t="Include" />
         <e p="CustomSecurityInitializerAlgorithm.cs" t="Include" />
         <e p="DailyAlgorithm.cs" t="Include" />
@@ -69,9 +77,19 @@
         <e p="DividendAlgorithm.cs" t="Include" />
         <e p="DropboxBaseDataUniverseSelectionAlgorithm.cs" t="Include" />
         <e p="DropboxUniverseSelectionAlgorithm.cs" t="Include" />
+        <e p="DuplicateSecurityWithBenchmarkRegressionAlgorithm.cs" t="Include" />
         <e p="EmaCrossUniverseSelectionAlgorithm.cs" t="Include" />
         <e p="ETFGlobalRotationAlgorithm.cs" t="Include" />
         <e p="FilteredIdentityAlgorithm.cs" t="Include" />
+        <e p="FinancialAdvisorDemoAlgorithm.cs" t="Include" />
+        <e p="fku" t="Include">
+          <e p="src" t="Include">
+            <e p="ButtomReversalAlgorithm.cs" t="Include" />
+          </e>
+          <e p="test" t="Include" />
+        </e>
+        <e p="ForexInternalFeedOnDataHigherResolutionRegressionAlgorithm.cs" t="Include" />
+        <e p="ForexInternalFeedOnDataSameResolutionRegressionAlgorithm.cs" t="Include" />
         <e p="FractionalQuantityRegressionAlgorithm.cs" t="Include" />
         <e p="FuturesMomentumAlgorithm.cs" t="Include" />
         <e p="FuzzyInferenceAlgorithm.cs" t="Include" />
@@ -90,6 +108,7 @@
         <e p="obj" t="ExcludeRecursive" />
         <e p="OpeningBreakoutAlgorithm.cs" t="Include" />
         <e p="OptionChainConsistencyRegressionAlgorithm.cs" t="Include" />
+        <e p="OptionChainProviderAlgorithm.cs" t="Include" />
         <e p="OptionExerciseAssignRegressionAlgorithm.cs" t="Include" />
         <e p="OptionOpenInterestRegressionAlgorithm.cs" t="Include" />
         <e p="OptionRenameRegressionAlgorithm.cs" t="Include" />
@@ -109,6 +128,7 @@
         <e p="RenkoConsolidatorAlgorithm.cs" t="Include" />
         <e p="RollingWindowAlgorithm.cs" t="Include" />
         <e p="ScheduledEventsAlgorithm.cs" t="Include" />
+        <e p="StandardDeviationExecutionModelRegressionAlgorithm.cs" t="Include" />
         <e p="StressSymbols.cs" t="Include" />
         <e p="StressSymbolsAlgorithm.cs" t="Include" />
         <e p="TickDataFilteringAlgorithm.cs" t="Include" />
@@ -117,9 +137,62 @@
         <e p="UpdateOrderLiveTestAlgorithm.cs" t="Include" />
         <e p="UpdateOrderRegressionAlgorithm.cs" t="Include" />
         <e p="UserDefinedUniverseAlgorithm.cs" t="Include" />
+        <e p="VolumeWeightedAveragePriceExecutionModelRegressionAlgorithm.cs" t="Include" />
         <e p="WarmupAlgorithm.cs" t="Include" />
         <e p="WarmupHistoryAlgorithm.cs" t="Include" />
         <e p="WeeklyUniverseSelectionRegressionAlgorithm.cs" t="Include" />
+      </e>
+      <e p="Algorithm.Framework" t="IncludeRecursive">
+        <e p="Alphas" t="Include">
+          <e p="AlphaModelPythonWrapper.cs" t="Include" />
+          <e p="ConstantAlphaModel.cs" t="Include" />
+          <e p="EmaCrossAlphaModel.cs" t="Include" />
+          <e p="IAlphaModel.cs" t="Include" />
+          <e p="MacdAlphaModel.cs" t="Include" />
+          <e p="RsiAlphaModel.cs" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Execution" t="Include">
+          <e p="ExecutionModelPythonWrapper.cs" t="Include" />
+          <e p="IExecutionModel.cs" t="Include" />
+          <e p="ImmediateExecutionModel.cs" t="Include" />
+          <e p="NullExecutionModel.cs" t="Include" />
+          <e p="OrderSizing.cs" t="Include" />
+          <e p="StandardDeviationExecutionModel.cs" t="Include" />
+          <e p="VolumeWeightedAveragePriceExecutionModel.cs" t="Include" />
+        </e>
+        <e p="INotifiedSecurityChanges.cs" t="Include" />
+        <e p="NotifiedSecurityChanges.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Portfolio" t="Include">
+          <e p="EqualWeightingPortfolioConstructionModel.cs" t="Include" />
+          <e p="IPortfolioConstructionModel.cs" t="Include" />
+          <e p="NullPortfolioConstructionModel.cs" t="Include" />
+          <e p="PortfolioConstructionModelPythonWrapper.cs" t="Include" />
+        </e>
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="QCAlgorithmFramework.cs" t="Include" />
+        <e p="QCAlgorithmFramework.Python.cs" t="Include" />
+        <e p="QuantConnect.Algorithm.Framework.csproj" t="IncludeRecursive" />
+        <e p="Risk" t="Include">
+          <e p="IRiskManagementModel.cs" t="Include" />
+          <e p="MaximumDrawdownPercentPerSecurity.cs" t="Include" />
+          <e p="NullRiskManagementModel.cs" t="Include" />
+          <e p="RiskManagementModelPythonWrapper.cs" t="Include" />
+        </e>
+        <e p="Selection" t="Include">
+          <e p="CoarseFundamentalUniverseSelectionModel.cs" t="Include" />
+          <e p="FineFundamentalUniverseSelectionModel.cs" t="Include" />
+          <e p="FundamentalUniverseSelectionModel.cs" t="Include" />
+          <e p="IUniverseSelectionModel.cs" t="Include" />
+          <e p="ManualUniverse.cs" t="Include" />
+          <e p="ManualUniverseSelectionModel.cs" t="Include" />
+          <e p="QC500UniverseSelectionModel.cs" t="Include" />
+          <e p="UniverseSelectionModelPythonWrapper.cs" t="Include" />
+        </e>
       </e>
       <e p="Algorithm.FSharp" t="IncludeRecursive">
         <e p="BasicTemplateAlgorithm.fs" t="Include" />
@@ -128,8 +201,6 @@
         <e p="packages.config" t="Include" />
         <e p="QuantConnect.Algorithm.FSharp.fsproj" t="IncludeRecursive" />
       </e>
-      <e p="Algorithm.Python\QuantConnect.Algorithm.Python.csproj" t="IncludeRecursive" />
-      <e p="Algorithm.Python\QuantConnect.Algorithm.PythonTools.pyproj" t="IncludeRecursive" />
       <e p="AlgorithmFactory" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Loader.cs" t="Include" />
@@ -148,7 +219,6 @@
       <e p="Api" t="IncludeRecursive">
         <e p="Api.cs" t="Include" />
         <e p="ApiConnection.cs" t="Include" />
-        <e p="ApiWebSocketConnection.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="packages.config" t="Include" />
@@ -180,12 +250,15 @@
         </e>
         <e p="GDAX" t="Include">
           <e p="AuthenticationToken.cs" t="Include" />
+          <e p="BestBidAskUpdatedEventArgs.cs" t="Include" />
           <e p="GDAXBrokerage.cs" t="Include" />
           <e p="GDAXBrokerage.Messaging.cs" t="Include" />
           <e p="GDAXBrokerage.Utility.cs" t="Include" />
           <e p="GDAXBrokerageFactory.cs" t="Include" />
+          <e p="GDAXDataQueueHandler.cs" t="Include" />
           <e p="GDAXFill.cs" t="Include" />
           <e p="Messages.cs" t="Include" />
+          <e p="OrderBook.cs" t="Include" />
         </e>
         <e p="InteractiveBrokers" t="Include">
           <e p="Client" t="Include">
@@ -263,8 +336,16 @@
             <e p="VerifyCompletedEventArgs.cs" t="Include" />
             <e p="VerifyMessageApiEventArgs.cs" t="Include" />
           </e>
+          <e p="FinancialAdvisor" t="Include">
+            <e p="AccountAlias.cs" t="Include" />
+            <e p="Allocation.cs" t="Include" />
+            <e p="AllocationProfile.cs" t="Include" />
+            <e p="FinancialAdvisorConfiguration.cs" t="Include" />
+            <e p="Group.cs" t="Include" />
+          </e>
           <e p="HistoricalDataType.cs" t="Include" />
           <e p="IB-symbol-map.json" t="Include" />
+          <e p="InteractiveBrokersAccountData.cs" t="Include" />
           <e p="InteractiveBrokersBrokerage.cs" t="Include" />
           <e p="InteractiveBrokersBrokerageFactory.cs" t="Include" />
           <e p="InteractiveBrokersGatewayRunner.cs" t="Include" />
@@ -569,7 +650,46 @@
         <e p="WebSocketWrapper.cs" t="Include" />
       </e>
       <e p="Common" t="IncludeRecursive">
+        <e p="Algorithm" t="Include">
+          <e p="Framework" t="Include">
+            <e p="Alphas" t="Include">
+              <e p="Analysis" t="Include">
+                <e p="Functions" t="Include">
+                  <e p="BinaryInsightScoreFunction.cs" t="Include" />
+                </e>
+                <e p="IInsightScoreFunction.cs" t="Include" />
+                <e p="IInsightScoreFunctionProvider.cs" t="Include" />
+                <e p="InsightAnalysisContext.cs" t="Include" />
+                <e p="InsightManager.cs" t="Include" />
+                <e p="ISecurityValuesProvider.cs" t="Include" />
+                <e p="Providers" t="Include">
+                  <e p="AlgorithmSecurityValuesProvider.cs" t="Include" />
+                  <e p="DefaultInsightScoreFunctionProvider.cs" t="Include" />
+                </e>
+                <e p="ReadOnlySecurityValuesCollection.cs" t="Include" />
+                <e p="SecurityValues.cs" t="Include" />
+              </e>
+              <e p="IInsightManagerExtension.cs" t="Include" />
+              <e p="Insight.cs" t="Include" />
+              <e p="InsightCollection.cs" t="Include" />
+              <e p="InsightDirection.cs" t="Include" />
+              <e p="InsightScore.cs" t="Include" />
+              <e p="InsightScoreType.cs" t="Include" />
+              <e p="InsightType.cs" t="Include" />
+              <e p="Serialization" t="Include">
+                <e p="InsightJsonConverter.cs" t="Include" />
+                <e p="SerializedInsight.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Portfolio" t="Include">
+              <e p="IPortfolioTarget.cs" t="Include" />
+              <e p="PortfolioTarget.cs" t="Include" />
+              <e p="PortfolioTargetCollection.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="AlgorithmSettings.cs" t="Include" />
+        <e p="AlphaRuntimeStatistics.cs" t="Include" />
         <e p="Api" t="Include">
           <e p="AuthenticationResponse.cs" t="Include" />
           <e p="Backtest.cs" t="Include" />
@@ -640,6 +760,11 @@
           <e p="Custom" t="Include">
             <e p="DailyFx.cs" t="Include" />
             <e p="FxcmVolume.cs" t="Include" />
+            <e p="Intrinio" t="Include">
+              <e p="EconomicDataSources.cs" t="Include" />
+              <e p="IntrinioConfig.cs" t="Include" />
+              <e p="IntrinioEconomicData.cs" t="Include" />
+            </e>
             <e p="Quandl.cs" t="Include" />
           </e>
           <e p="DynamicData.cs" t="Include" />
@@ -728,6 +853,17 @@
             <e p="UserDefinedUniverse.cs" t="Include" />
           </e>
         </e>
+        <e p="Exceptions" t="Include">
+          <e p="DllNotFoundPythonExceptionInterpreter.cs" t="Include" />
+          <e p="IExceptionInterpreter.cs" t="Include" />
+          <e p="InvalidTokenPythonExceptionInterpreter.cs" t="Include" />
+          <e p="KeyErrorPythonExceptionInterpreter.cs" t="Include" />
+          <e p="NoMethodMatchPythonExceptionInterpreter.cs" t="Include" />
+          <e p="PythonExceptionInterpreter.cs" t="Include" />
+          <e p="ScheduledEventExceptionInterpreter.cs" t="Include" />
+          <e p="StackExceptionInterpreter.cs" t="Include" />
+          <e p="UnsupportedOperandPythonExceptionInterpreter.cs" t="Include" />
+        </e>
         <e p="Extensions.cs" t="Include" />
         <e p="Field.cs" t="Include" />
         <e p="Global.cs" t="Include" />
@@ -749,11 +885,13 @@
           <e p="IDataQueueHandler.cs" t="Include" />
           <e p="IDataQueueUniverseProvider.cs" t="Include" />
           <e p="IFactorFileProvider.cs" t="Include" />
+          <e p="IFutureChainProvider.cs" t="Include" />
           <e p="IHistoryProvider.cs" t="Include" />
           <e p="IJobQueueHandler.cs" t="Include" />
           <e p="IMapFileProvider.cs" t="Include" />
           <e p="IMessagingHandler.cs" t="Include" />
           <e p="IOptionChainProvider.cs" t="Include" />
+          <e p="IOrderProperties.cs" t="Include" />
           <e p="IStreamReader.cs" t="Include" />
           <e p="ITradeBuilder.cs" t="Include" />
         </e>
@@ -777,7 +915,10 @@
           <e p="Fills" t="Include">
             <e p="IFillModel.cs" t="Include" />
             <e p="ImmediateFillModel.cs" t="Include" />
+            <e p="LatestPriceFillModel.cs" t="Include" />
           </e>
+          <e p="GDAXOrderProperties.cs" t="Include" />
+          <e p="InteractiveBrokersOrderProperties.cs" t="Include" />
           <e p="LimitOrder.cs" t="Include" />
           <e p="MarketOnCloseOrder.cs" t="Include" />
           <e p="MarketOnOpenOrder.cs" t="Include" />
@@ -816,6 +957,8 @@
         <e p="Packets" t="Include">
           <e p="AlgorithmNodePacket.cs" t="Include" />
           <e p="AlgorithmStatusPacket.cs" t="Include" />
+          <e p="AlphaNodePacket.cs" t="Include" />
+          <e p="AlphaResultPacket.cs" t="Include" />
           <e p="BacktestNodePacket.cs" t="Include" />
           <e p="BacktestResultPacket.cs" t="Include" />
           <e p="Controls.cs" t="Include" />
@@ -844,10 +987,14 @@
           <e p="FeeModelPythonWrapper.cs" t="Include" />
           <e p="FillModelPythonWrapper.cs" t="Include" />
           <e p="PandasConverter.cs" t="Include" />
+          <e p="PandasData.cs" t="Include" />
+          <e p="PythonActivator.cs" t="Include" />
           <e p="PythonData.cs" t="Include" />
           <e p="PythonQuandl.cs" t="Include" />
+          <e p="PythonSlice.cs" t="Include" />
           <e p="SecurityInitializerPythonWrapper.cs" t="Include" />
           <e p="SlippageModelPythonWrapper.cs" t="Include" />
+          <e p="VolatilityModelPythonWrapper.cs" t="Include" />
         </e>
         <e p="QuantConnect.csproj" t="IncludeRecursive" />
         <e p="RealTimeSynchronizedTimer.cs" t="Include" />
@@ -871,6 +1018,7 @@
           <e p="BrokerageModelSecurityInitializer.cs" t="Include" />
           <e p="Cash.cs" t="Include" />
           <e p="CashBook.cs" t="Include" />
+          <e p="CashBuyingPowerModel.cs" t="Include" />
           <e p="Cfd" t="Include">
             <e p="Cfd.cs" t="Include" />
             <e p="CfdCache.cs" t="Include" />
@@ -908,6 +1056,7 @@
           <e p="FuncSecurityInitializer.cs" t="Include" />
           <e p="FuncSecuritySeeder.cs" t="Include" />
           <e p="Future" t="Include">
+            <e p="EmptyFutureChainProvider.cs" t="Include" />
             <e p="Future.cs" t="Include" />
             <e p="FutureCache.cs" t="Include" />
             <e p="FutureExchange.cs" t="Include" />
@@ -919,7 +1068,11 @@
             <e p="FuturesExpiryFunctions.cs" t="Include" />
             <e p="FuturesExpiryUtilityFunctions.cs" t="Include" />
           </e>
+          <e p="GetMaximumOrderQuantityForTargetValueResult.cs" t="Include" />
+          <e p="HasSufficientBuyingPowerForOrderResult.cs" t="Include" />
           <e p="IBaseCurrencySymbol.cs" t="Include" />
+          <e p="IBuyingPowerModel.cs" t="Include" />
+          <e p="IDerivativeSecurity.cs" t="Include" />
           <e p="IDerivativeSecurityFilter.cs" t="Include" />
           <e p="IDerivativeSecurityFilterUniverse.cs" t="Include" />
           <e p="IMarginCallModel.cs" t="Include" />
@@ -933,7 +1086,6 @@
           <e p="IOrderProvider.cs" t="Include" />
           <e p="IPriceVariationModel.cs" t="Include" />
           <e p="ISecurityInitializer.cs" t="Include" />
-          <e p="ISecurityMarginModel.cs" t="Include" />
           <e p="ISecurityPortfolioModel.cs" t="Include" />
           <e p="ISecurityProvider.cs" t="Include" />
           <e p="ISecuritySeeder.cs" t="Include" />
@@ -1076,12 +1228,20 @@
       </e>
       <e p="Engine" t="IncludeRecursive">
         <e p="AlgorithmManager.cs" t="Include" />
+        <e p="Alphas" t="Include">
+          <e p="ChartingInsightManagerExtension.cs" t="Include" />
+          <e p="DefaultAlphaHandler.cs" t="Include" />
+          <e p="IAlphaHandler.cs" t="Include" />
+          <e p="StatisticsInsightManagerExtension.cs" t="Include" />
+        </e>
         <e p="app.config" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="DataFeeds" t="Include">
           <e p="ApiDataProvider.cs" t="Include" />
+          <e p="BacktestingFutureChainProvider.cs" t="Include" />
           <e p="BacktestingOptionChainProvider.cs" t="Include" />
           <e p="BaseDataExchange.cs" t="Include" />
+          <e p="CachingFutureChainProvider.cs" t="Include" />
           <e p="CachingOptionChainProvider.cs" t="Include" />
           <e p="CollectionSubscriptionDataSourceReader.cs" t="Include" />
           <e p="CreateStreamReaderErrorEventArgs.cs" t="Include" />
@@ -1122,12 +1282,13 @@
           <e p="IDataFeed.cs" t="Include" />
           <e p="InvalidSourceEventArgs.cs" t="Include" />
           <e p="ISubscriptionDataSourceReader.cs" t="Include" />
+          <e p="ISubscriptionSynchronizer.cs" t="Include" />
           <e p="ITimeProvider.cs" t="Include" />
+          <e p="LiveFutureChainProvider.cs" t="Include" />
           <e p="LiveOptionChainProvider.cs" t="Include" />
           <e p="LiveTradingDataFeed.cs" t="Include" />
           <e p="ManualTimeProvider.cs" t="Include" />
           <e p="Queues" t="Include">
-            <e p="ApiDataQueueHandler.cs" t="Include" />
             <e p="DataQueue.cs" t="Include" />
             <e p="FakeDataQueue.cs" t="Include" />
           </e>
@@ -1136,9 +1297,9 @@
           <e p="SingleEntryDataCacheProvider.cs" t="Include" />
           <e p="Subscription.cs" t="Include" />
           <e p="SubscriptionCollection.cs" t="Include" />
+          <e p="SubscriptionData.cs" t="Include" />
           <e p="SubscriptionDataReader.cs" t="Include" />
           <e p="SubscriptionDataSourceReader.cs" t="Include" />
-          <e p="SubscriptionLimiter.cs" t="Include" />
           <e p="SubscriptionSynchronizer.cs" t="Include" />
           <e p="TextSubscriptionDataSourceReader.cs" t="Include" />
           <e p="TimeSlice.cs" t="Include" />
@@ -1178,12 +1339,14 @@
           <e p="DesktopResultHandler.cs" t="Include" />
           <e p="IResultHandler.cs" t="Include" />
           <e p="LiveTradingResultHandler.cs" t="Include" />
+          <e p="RegressionResultHandler.cs" t="Include" />
         </e>
         <e p="Server" t="Include">
           <e p="ILeanManager.cs" t="Include" />
           <e p="LocalLeanManager.cs" t="Include" />
         </e>
         <e p="Setup" t="Include">
+          <e p="AlgorithmSetupException.cs" t="Include" />
           <e p="BacktestingSetupHandler.cs" t="Include" />
           <e p="BrokerageSetupHandler.cs" t="Include" />
           <e p="ConsoleSetupHandler.cs" t="Include" />
@@ -1279,6 +1442,7 @@
         <e p="CommodityChannelIndex.cs" t="Include" />
         <e p="CompositeIndicator.cs" t="Include" />
         <e p="ConstantIndicator.cs" t="Include" />
+        <e p="CoppockCurve.cs" t="Include" />
         <e p="Delay.cs" t="Include" />
         <e p="DetrendedPriceOscillator.cs" t="Include" />
         <e p="DonchianChannel.cs" t="Include" />
@@ -1298,6 +1462,7 @@
         <e p="IndicatorExtensions.cs" t="Include" />
         <e p="IndicatorResult.cs" t="Include" />
         <e p="IndicatorStatus.cs" t="Include" />
+        <e p="IntradayVwap.cs" t="Include" />
         <e p="KaufmanAdaptiveMovingAverage.cs" t="Include" />
         <e p="KeltnerChannels.cs" t="Include" />
         <e p="LeastSquaresMovingAverage.cs" t="Include" />
@@ -1345,6 +1510,7 @@
         <e p="UltimateOscillator.cs" t="Include" />
         <e p="Variance.cs" t="Include" />
         <e p="VolumeWeightedAveragePriceIndicator.cs" t="Include" />
+        <e p="WilderMovingAverage.cs" t="Include" />
         <e p="WilliamsPercentR.cs" t="Include" />
         <e p="WindowIdentity.cs" t="Include" />
         <e p="WindowIndicator.cs" t="Include" />
@@ -1355,6 +1521,7 @@
         <e p="BasicQuantBookTemplate.ipynb" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="config.json" t="Include" />
+        <e p="FutureHistory.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="OptionHistory.cs" t="Include" />
         <e p="packages.config" t="Include" />
@@ -1363,6 +1530,7 @@
         </e>
         <e p="QuantBook.cs" t="Include" />
         <e p="QuantConnect.Jupyter.csproj" t="IncludeRecursive" />
+        <e p="readme.md" t="Include" />
       </e>
       <e p="Launcher" t="IncludeRecursive">
         <e p="app.config" t="Include" />
@@ -1417,7 +1585,7 @@
       </e>
       <e p="packages" t="ExcludeRecursive">
         <e p="Accord.3.6.0\build\Accord.dll.config" t="Include" />
-        <e p="QuantConnect.pythonnet.1.0.5.1\build\nPython.exe" t="Include" />
+        <e p="QuantConnect.pythonnet.1.0.5.5\build\nPython.exe" t="Include" />
       </e>
       <e p="QuantConnect.Lean.sln" t="IncludeFlat" />
       <e p="Queues" t="IncludeRecursive">
@@ -1435,10 +1603,25 @@
         <e p="Algorithm" t="Include">
           <e p="AlgorithmAddDataTests.cs" t="Include" />
           <e p="AlgorithmInitializeTests.cs" t="Include" />
+          <e p="AlgorithmPlottingTests.cs" t="Include" />
+          <e p="AlgorithmRegisterIndicatorTests.cs" t="Include" />
           <e p="AlgorithmResolveConsolidatorTests.cs" t="Include" />
           <e p="AlgorithmSetBrokerageTests.cs" t="Include" />
           <e p="AlgorithmSetHoldingsTests.cs" t="Include" />
+          <e p="AlgorithmSubscriptionManagerRemoveConsolidatorTests.cs" t="Include" />
           <e p="AlgorithmTradingTests.cs" t="Include" />
+          <e p="CashModelAlgorithmTradingTests.cs" t="Include" />
+          <e p="Framework" t="Include">
+            <e p="Alphas" t="Include">
+              <e p="Serialization" t="Include">
+                <e p="InsightJsonConverterTests.cs" t="Include" />
+              </e>
+            </e>
+            <e p="InsightTests.cs" t="Include" />
+            <e p="Portfolio" t="Include">
+              <e p="PortfolioTargetTests.cs" t="Include" />
+            </e>
+          </e>
         </e>
         <e p="AlgorithmFactory" t="Include">
           <e p="LoaderTests.cs" t="Include" />
@@ -1461,6 +1644,7 @@
             <e p="FxcmSymbolMapperTests.cs" t="Include" />
           </e>
           <e p="GDAX" t="Include">
+            <e p="GDAXBrokerageAdditionalTests.cs" t="Include" />
             <e p="GDAXBrokerageIntegrationTests.cs" t="Include" />
             <e p="GDAXBrokerageTests.cs" t="Include" />
             <e p="GDAXTestHelpers.cs" t="Include" />
@@ -1522,10 +1706,23 @@
             <e p="TickQuoteBarConsolidatorTests.cs" t="Include" />
             <e p="TradeBarConsolidatorTests.cs" t="Include" />
           </e>
+          <e p="Exceptions" t="Include">
+            <e p="DllNotFoundPythonExceptionInterpreterTests.cs" t="Include" />
+            <e p="FakeExceptionInterpreter.cs" t="Include" />
+            <e p="InvalidTokenPythonExceptionInterpreterTests.cs" t="Include" />
+            <e p="KeyErrorPythonExceptionInterpreterTests.cs" t="Include" />
+            <e p="NoMethodMatchPythonExceptionInterpreterTests.cs" t="Include" />
+            <e p="NullExceptionInterpreter.cs" t="Include" />
+            <e p="PythonExceptionInterpreterTests.cs" t="Include" />
+            <e p="ScheduledEventExceptionInterpreterTests.cs" t="Include" />
+            <e p="StackExceptionInterpreterTests.cs" t="Include" />
+            <e p="UnsupportedOperandPythonExceptionInterpreterTests.cs" t="Include" />
+          </e>
           <e p="MarketTests.cs" t="Include" />
           <e p="Orders" t="Include">
             <e p="Fills" t="Include">
               <e p="ImmediateFillModelTests.cs" t="Include" />
+              <e p="LatestPriceFillModelTests.cs" t="Include" />
               <e p="PartialMarketFillModelTests.cs" t="Include" />
             </e>
             <e p="OrderJsonConverterTests.cs" t="Include" />
@@ -1541,11 +1738,13 @@
           <e p="Scheduling" t="Include">
             <e p="DateRulesTests.cs" t="Include" />
             <e p="ScheduledEventTests.cs" t="Include" />
+            <e p="ScheduleManagerTests.cs" t="Include" />
             <e p="TimeRulesTests.cs" t="Include" />
           </e>
           <e p="Securities" t="Include">
             <e p="BrokerageModelSecurityInitializerTests.cs" t="Include" />
             <e p="CashBookTests.cs" t="Include" />
+            <e p="CashBuyingPowerModelTests.cs" t="Include" />
             <e p="CashTests.cs" t="Include" />
             <e p="Cfd" t="Include">
               <e p="CfdTests.cs" t="Include" />
@@ -1555,32 +1754,35 @@
               <e p="EquityTransactionModelTests.cs" t="Include" />
             </e>
             <e p="Forex" t="Include">
+              <e p="ForexHoldingTest.cs" t="Include" />
               <e p="ForexTests.cs" t="Include" />
               <e p="ForexTransactionModelTests.cs" t="Include" />
             </e>
             <e p="FutureFilterTests.cs" t="Include" />
+            <e p="FutureMarginBuyingPowerModelTests.cs" t="Include" />
             <e p="Futures" t="Include">
               <e p="FuturesExpiryFunctionsTests.cs" t="Include" />
               <e p="FuturesExpiryUtilityFunctionsTests.cs" t="Include" />
             </e>
-            <e p="FuturesMarginModelTests.cs" t="Include" />
             <e p="ImmediateSettlementModelTests.cs" t="Include" />
             <e p="LocalMarketHoursTests.cs" t="Include" />
             <e p="MarginCallModelTests.cs" t="Include" />
             <e p="MarketHoursDatabaseTests.cs" t="Include" />
             <e p="OptionFilterTests.cs" t="Include" />
-            <e p="OptionMarginModelTests.cs" t="Include" />
+            <e p="OptionMarginBuyingPowerModelTests.cs" t="Include" />
             <e p="OptionPriceModelTests.cs" t="Include" />
             <e p="Options" t="Include">
               <e p="OptionChainProviderTests.cs" t="Include" />
             </e>
-            <e p="PatternDayTradingMarginModelTests.cs" t="Include" />
+            <e p="PatternDayTradingMarginBuyingPowerModelTests.cs" t="Include" />
             <e p="PriceVariationModelsTests.cs" t="Include" />
             <e p="RelativeStandardDeviationVolatilityModelTests.cs" t="Include" />
+            <e p="SecurityCacheTest.cs" t="Include" />
             <e p="SecurityDatabaseKeyTests.cs" t="Include" />
             <e p="SecurityExchangeHoursTests.cs" t="Include" />
             <e p="SecurityIdentifierTests.cs" t="Include" />
             <e p="SecurityManagerTests.cs" t="Include" />
+            <e p="SecurityMarginModelTests.cs" t="Include" />
             <e p="SecurityPortfolioManagerTests.cs" t="Include" />
             <e p="SecurityPortfolioModelTests.cs" t="Include" />
             <e p="SecurityTests.cs" t="Include" />
@@ -1633,6 +1835,7 @@
           <e p="ConfigTests.cs" t="Include" />
         </e>
         <e p="Engine" t="Include">
+          <e p="AlgorithmManagerTests.cs" t="Include" />
           <e p="BasicOptionAssignmentSimulationTests.cs" t="Include" />
           <e p="BrokerageTransactionHandlerTests" t="Include">
             <e p="BrokerageTransactionHandlerTests.cs" t="Include" />
@@ -1642,7 +1845,6 @@
           </e>
           <e p="DataFeeds" t="Include">
             <e p="AlgorithmStub.cs" t="Include" />
-            <e p="ApiDataQueueHandlerTests.cs" t="Include" />
             <e p="Auxiliary" t="Include">
               <e p="MapFileResolverTests.cs" t="Include" />
             </e>
@@ -1651,6 +1853,8 @@
               <e p="BaseDataCollectionAggregatorEnumeratorTests.cs" t="Include" />
               <e p="EnqueableEnumeratorTests.cs" t="Include" />
               <e p="Factories" t="Include">
+                <e p="BaseDataCollectionSubscriptionEnumeratorFactoryTests.cs" t="Include" />
+                <e p="BaseDataSubscriptionEnumeratorFactoryTests.cs" t="Include" />
                 <e p="FineFundamentalSubscriptionEnumeratorFactoryTests.cs" t="Include" />
                 <e p="LiveCustomDataSubscriptionEnumeratorFactoryTests.cs" t="Include" />
               </e>
@@ -1672,23 +1876,24 @@
             <e p="LiveTradingDataFeedTests.cs" t="Include" />
             <e p="RemoteFileBaseData.cs" t="Include" />
             <e p="RestApiBaseData.cs" t="Include" />
+            <e p="SubscriptionCollectionTests.cs" t="Include" />
+            <e p="SubscriptionSynchronizerTests.cs" t="Include" />
             <e p="TimeSliceTests.cs" t="Include" />
-            <e p="ZipEntryNameSubsciptionFactoryTests.cs" t="Include" />
+            <e p="ZipEntryNameSubscriptionFactoryTests.cs" t="Include" />
           </e>
           <e p="DataProviders" t="Include">
             <e p="DefaultDataProviderTests.cs" t="Include" />
           </e>
           <e p="DefaultBrokerageMessageHandler.cs" t="Include" />
           <e p="FactorFileTests.cs" t="Include" />
-          <e p="RealTime" t="Include">
-            <e p="ScheduledEventTests.cs" t="Include" />
-          </e>
+          <e p="PerformanceBenchmarkAlgorithms.cs" t="Include" />
           <e p="RealTimePriceUpdateTests.cs" t="Include" />
           <e p="Setup" t="Include">
             <e p="BrokerageSetupHandlerTests.cs" t="Include" />
           </e>
           <e p="TestResultHandler.cs" t="Include" />
         </e>
+        <e p="ExpectedAlphaStatistics.cs" t="Include" />
         <e p="Indicators" t="Include">
           <e p="AbsolutePriceOscillatorTests.cs" t="Include" />
           <e p="AccelerationBandsTests.cs" t="Include" />
@@ -1709,6 +1914,7 @@
           <e p="CommonIndicatorTests.cs" t="Include" />
           <e p="CompositeIndicatorTests.cs" t="Include" />
           <e p="ConstantIndicatorTests.cs" t="Include" />
+          <e p="CoppockCurveTests.cs" t="Include" />
           <e p="DelayTests.cs" t="Include" />
           <e p="DetrendedPriceOscillatorTests.cs" t="Include" />
           <e p="DonchianChannelTest.cs" t="Include" />
@@ -1767,6 +1973,13 @@
           <e p="WilliamsPercentRTests.cs" t="Include" />
           <e p="WindowIdentityTests.cs" t="Include" />
         </e>
+        <e p="Jupyter" t="Include">
+          <e p="QuantBookHistoryTests.cs" t="Include" />
+          <e p="RegressionScripts" t="Include">
+            <e p="custom_data.py" t="Include" />
+            <e p="Test_QuantBookHistory.py" t="Include" />
+          </e>
+        </e>
         <e p="Logging" t="Include">
           <e p="FileLogHandlerTests.cs" t="Include" />
         </e>
@@ -1779,16 +1992,23 @@
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
         <e p="Python" t="Include">
+          <e p="AlgorithmPythonWrapperTests.cs" t="Include" />
           <e p="Indicators" t="Include">
             <e p="IndicatorExtensionsTests.py" t="Include" />
           </e>
+          <e p="MethodOverloadTests.cs" t="Include" />
+          <e p="PandasConverterTests.cs" t="Include" />
         </e>
         <e p="QuantConnect.Tests.csproj" t="IncludeRecursive" />
         <e p="RegressionAlgorithms" t="Include">
+          <e p="Test_AlgorithmPythonWrapper.py" t="Include" />
           <e p="Test_Cash.cs" t="Include" />
+          <e p="Test_CustomDataAlgorithm.py" t="Include" />
           <e p="Test_LiveAlgorithm.cs" t="Include" />
+          <e p="Test_MethodOverload.py" t="Include" />
           <e p="Test_MixedAssets.cs" t="Include" />
           <e p="Test_OnEndOfDay.cs" t="Include" />
+          <e p="Test_PythonExceptionInterpreter.py" t="Include" />
           <e p="Test_SetHolding.cs" t="Include" />
         </e>
         <e p="RegressionTests.cs" t="Include" />
@@ -1824,10 +2044,12 @@
           <e p="spy_apo.txt" t="Include" />
           <e p="spy_aroon_oscillator.txt" t="Include" />
           <e p="spy_atr.txt" t="Include" />
+          <e p="spy_atr_wilder.txt" t="Include" />
           <e p="spy_bollinger_bands.txt" t="Include" />
           <e p="spy_bop.txt" t="Include" />
           <e p="spy_candle_patterns.txt" t="Include" />
           <e p="spy_cmo.txt" t="Include" />
+          <e p="spy_coppock_curve.csv" t="Include" />
           <e p="spy_dema.txt" t="Include" />
           <e p="spy_dpo.csv" t="Include" />
           <e p="spy_heikin_ashi.txt" t="Include" />
@@ -1860,6 +2082,7 @@
           <e p="spy_with_ichimoku.csv" t="Include" />
           <e p="spy_with_indicators.txt" t="Include" />
           <e p="spy_with_keltner.csv" t="Include" />
+          <e p="spy_with_macd.txt" t="Include" />
           <e p="spy_with_obv.txt" t="Include" />
           <e p="spy_with_roc50.txt" t="Include" />
           <e p="spy_with_rocp50.txt" t="Include" />
@@ -1930,10 +2153,15 @@
           <e p="FxcmVolumeWriter.cs" t="Include" />
           <e p="Program.cs" t="Include" />
         </e>
+        <e p="GDAXDownloader" t="Include">
+          <e p="GDAXDownloader.cs" t="Include" />
+          <e p="Program.cs" t="Include" />
+        </e>
         <e p="GoogleDownloader" t="Include">
           <e p="GoogleDataDownloader.cs" t="Include" />
           <e p="Program.cs" t="Include" />
         </e>
+        <e p="GzipStreamProvider.cs" t="Include" />
         <e p="IDataDownloader.cs" t="Include" />
         <e p="IDataProcessor.cs" t="Include" />
         <e p="IEX" t="Include">
@@ -1960,6 +2188,16 @@
         </e>
         <e p="IStreamParser.cs" t="Include" />
         <e p="IStreamProvider.cs" t="Include" />
+        <e p="IVolatilityEquityConverter" t="Include">
+          <e p="Program.cs" t="Include" />
+        </e>
+        <e p="KaikoDataConverter" t="Include">
+          <e p="Program.cs" t="Include" />
+        </e>
+        <e p="KrakenDataDownloader" t="Include">
+          <e p="KrakenDataDownloader.cs" t="Include" />
+          <e p="Program.cs" t="Include" />
+        </e>
         <e p="LazyStreamWriter.cs" t="Include" />
         <e p="LeanDataReader.cs" t="Include" />
         <e p="LeanDataWriter.cs" t="Include" />
@@ -1987,6 +2225,7 @@
           <e p="Program.cs" t="Include" />
         </e>
         <e p="RawFileProcessor.cs" t="Include" />
+        <e p="TickAggregator.cs" t="Include" />
         <e p="YahooDownloader" t="Include">
           <e p="Historical.cs" t="Include" />
           <e p="Program.cs" t="Include" />
@@ -2047,7 +2286,6 @@
           <e p="LeanWinForm.resx" t="Include" />
         </e>
       </e>
-      <e p="VisualStudioPlugin\QuantConnect.VisualStudio17Plugin.csproj" t="IncludeRecursive" />
     </e>
   </component>
 </project>

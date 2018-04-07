@@ -95,6 +95,7 @@
     <Compile Include="Benchmarks\EmptySingleSecuritySecondEquityBenchmark.cs" />
     <Compile Include="CustomFrameworkModelsAlgorithm.cs" />
     <Compile Include="FinancialAdvisorDemoAlgorithm.cs" />
+    <Compile Include="fku\src\ButtomReversalAlgorithm.cs" />
     <Compile Include="ForexInternalFeedOnDataHigherResolutionRegressionAlgorithm.cs" />
     <Compile Include="ForexInternalFeedOnDataSameResolutionRegressionAlgorithm.cs" />
     <Compile Include="RollingWindowAlgorithm.cs" />
@@ -217,6 +218,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="fku\test" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
