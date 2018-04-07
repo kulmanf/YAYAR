@@ -15,40 +15,54 @@
 
 using System;
 using System.Collections.Generic;
-using QuantConnect.Data.Market;
 using QuantConnect.Orders;
 using QuantConnect.Securities;
-using QuantConnect.Securities.Interfaces;
 using QuantConnect.Orders.Fills;
 using QuantConnect.Orders.Fees;
-using QuantConnect.Orders.Slippage;
-using QuantConnect.Configuration;
 using System.Linq;
-using QuantConnect.Logging;
 
 namespace QuantConnect.Brokerages
 {
-
     /// <summary>
     /// Provides GDAX specific properties
     /// </summary>
     public class GDAXBrokerageModel : DefaultBrokerageModel
     {
-
         private static BrokerageMessageEvent _message = new BrokerageMessageEvent(BrokerageMessageType.Warning, 0, "Brokerage does not support update. You must cancel and re-create instead.");
+
+        // https://support.gdax.com/customer/portal/articles/2725970-trading-rules
+        private static readonly Dictionary<string, decimal> MinimumOrderSizes = new Dictionary<string, decimal>
+        {
+            { "BTCUSD", 0.001m },
+            { "BTCEUR", 0.001m },
+            { "BTCGBP", 0.001m },
+
+            { "BCHUSD", 0.01m },
+            { "BCHEUR", 0.01m },
+            { "BCHBTC", 0.01m },
+
+            { "ETHUSD", 0.01m },
+            { "ETHEUR", 0.01m },
+            { "ETHGBP", 0.01m },
+            { "ETHBTC", 0.01m },
+
+            { "LTCUSD", 0.1m },
+            { "LTCEUR", 0.1m },
+            { "LTCGBP", 0.1m },
+            { "LTCBTC", 0.1m }
+        };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GDAXBrokerageModel"/> class
         /// </summary>
         /// <param name="accountType">The type of account to be modelled, defaults to
-        /// <see cref="QuantConnect.AccountType.Margin"/></param>
-        public GDAXBrokerageModel(AccountType accountType = AccountType.Margin)
+        /// <see cref="AccountType.Cash"/></param>
+        public GDAXBrokerageModel(AccountType accountType = AccountType.Cash)
             : base(accountType)
         {
             if (accountType == AccountType.Margin)
             {
-                new BrokerageMessageEvent(BrokerageMessageType.Warning, 0,
-                    "It is recommend to use a cash account. Margin trading is currently in pre-Alpha. Use at your own risk and please report any issues encountered.");
+                throw new Exception("The GDAX brokerage does not currently support Margin trading.");
             }
         }
 
@@ -59,7 +73,8 @@ namespace QuantConnect.Brokerages
         /// <returns></returns>
         public override decimal GetLeverage(Security security)
         {
-            return 3m;
+            // margin trading is not currently supported by GDAX
+            return 1m;
         }
 
         /// <summary>
@@ -101,11 +116,14 @@ namespace QuantConnect.Brokerages
                 return false;
             }
 
-            if (Math.Abs(order.Quantity) < 0.01m)
+            decimal minimumOrderSize;
+            if (MinimumOrderSizes.TryGetValue(security.Symbol.Value, out minimumOrderSize) &&
+                Math.Abs(order.Quantity) < minimumOrderSize)
             {
                 message = new BrokerageMessageEvent(BrokerageMessageType.Warning, "NotSupported",
-                    "The minimum order quantity is 0.01"
+                    $"The minimum order quantity for {security.Symbol.Value} is {minimumOrderSize}"
                 );
+
                 return false;
             }
 
@@ -130,5 +148,27 @@ namespace QuantConnect.Brokerages
             return base.CanSubmitOrder(security, order, out message);
         }
 
+        /// <summary>
+        /// GDAX fills order using the latest Trade or Quote data
+        /// </summary>
+        /// <param name="security">The security to get fill model for</param>
+        /// <returns>The new fill model for this brokerage</returns>
+        public override IFillModel GetFillModel(Security security)
+        {
+            return new LatestPriceFillModel();
+        }
+
+        /// <summary>
+        /// Gets a new buying power model for the security, returning the default model with the security's configured leverage.
+        /// For cash accounts, leverage = 1 is used.
+        /// </summary>
+        /// <param name="security">The security to get a buying power model for</param>
+        /// <param name="accountType">The account type</param>
+        /// <returns>The buying power model for this brokerage/security</returns>
+        public override IBuyingPowerModel GetBuyingPowerModel(Security security, AccountType accountType)
+        {
+            // margin trading is not currently supported by GDAX
+            return new CashBuyingPowerModel();
+        }
     }
 }

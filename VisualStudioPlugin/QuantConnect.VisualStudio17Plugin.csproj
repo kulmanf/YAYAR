@@ -75,11 +75,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AuthorizationManager.cs" />
+    <Compile Include="ErrorDialog.xaml.cs">
+      <DependentUpon>ErrorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Credentials.cs" />
     <Compile Include="CredentialsManager.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="LogInCommand.cs" />
-    <Compile Include="LogInDialog.xaml.cs" />
+    <Compile Include="VSActivityLog.cs" />
+    <Compile Include="AuthenticationCommand.cs" />
+    <Compile Include="LoginDialog.xaml.cs" />
     <Compile Include="PathUtils.cs" />
     <Compile Include="ProjectFinder.cs" />
     <Compile Include="ProjectNameDialog.xaml.cs" />
@@ -92,12 +95,18 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Key.snk" />
-    <None Include="packages.QuantConnect.VisualStudio17Plugin.config" />
+    <None Include="packages.QuantConnect.VisualStudio17Plugin.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ErrorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ProjectNameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,19 +115,26 @@
       <ResourceName>Menus.ctmenu</ResourceName>
       <SubType>Designer</SubType>
     </VSCTCompile>
-    <Page Include="LogInDialog.xaml">
+    <Page Include="LoginDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Content Include="icon_128x128.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Resource Include="..\UserInterface\Icons\dialog-close-32.png">
+      <Link>Resources\dialog-close-32.png</Link>
+    </Resource>
+    <Resource Include="..\UserInterface\Icons\dialog-ok-apply-32.png">
+      <Link>Resources\dialog-ok-apply-32.png</Link>
+    </Resource>
+    <Content Include="..\UserInterface\Icons\icon_128x128.png">
+      <Link>icon_128x128.png</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Resources\QuantConnectPackage.ico" />
+    <Resource Include="Resources\icon_128x128_resource.png" />
     <Content Include="Resources\ToolMenuCommand.png" />
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +253,7 @@
     <EmbeddedResource Include="VSPackage.resx">
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

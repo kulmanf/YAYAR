@@ -1,11 +1,11 @@
 ﻿/*
  * QUANTCONNECT.COM - Democratizing Finance, Empowering Individuals.
  * Lean Algorithmic Trading Engine v2.0. Copyright 2014 QuantConnect Corporation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NodaTime;
 using Oanda.RestV20.Api;
+using Oanda.RestV20.Client;
 using Oanda.RestV20.Model;
 using Oanda.RestV20.Session;
 using QuantConnect.Data.Market;
@@ -50,6 +51,7 @@ namespace QuantConnect.Brokerages.Oanda
         private TransactionStreamSession _eventsSession;
         private PricingStreamSession _ratesSession;
         private readonly Dictionary<Symbol, DateTimeZone> _symbolExchangeTimeZones = new Dictionary<Symbol, DateTimeZone>();
+        private readonly object _locker = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OandaRestApiV20"/> class.
@@ -64,12 +66,12 @@ namespace QuantConnect.Brokerages.Oanda
         public OandaRestApiV20(OandaSymbolMapper symbolMapper, IOrderProvider orderProvider, ISecurityProvider securityProvider, Environment environment, string accessToken, string accountId, string agent)
             : base(symbolMapper, orderProvider, securityProvider, environment, accessToken, accountId, agent)
         {
-            var basePathRest = environment == Environment.Trade ? 
-                "https://api-fxtrade.oanda.com/v3" : 
+            var basePathRest = environment == Environment.Trade ?
+                "https://api-fxtrade.oanda.com/v3" :
                 "https://api-fxpractice.oanda.com/v3";
 
-            var basePathStreaming = environment == Environment.Trade ? 
-                "https://stream-fxtrade.oanda.com/v3" : 
+            var basePathStreaming = environment == Environment.Trade ?
+                "https://stream-fxtrade.oanda.com/v3" :
                 "https://stream-fxpractice.oanda.com/v3";
 
             _apiRest = new DefaultApi(basePathRest);
@@ -89,7 +91,7 @@ namespace QuantConnect.Brokerages.Oanda
         }
 
         /// <summary>
-        /// Gets all open orders on the account. 
+        /// Gets all open orders on the account.
         /// NOTE: The order objects returned do not have QC order IDs.
         /// </summary>
         /// <returns>The open orders returned from Oanda</returns>
@@ -123,7 +125,7 @@ namespace QuantConnect.Brokerages.Oanda
 
             return new List<Cash>
             {
-                new Cash(response.Account.Currency, 
+                new Cash(response.Account.Currency,
                     response.Account.Balance.ToDecimal(),
                     GetUsdConversion(response.Account.Currency))
             };
@@ -152,10 +154,19 @@ namespace QuantConnect.Brokerages.Oanda
         /// <returns>True if the request for a new order has been placed, false otherwise</returns>
         public override bool PlaceOrder(Order order)
         {
-            var request = GenerateOrderRequest(order);
-            var response = _apiRest.CreateOrder(Authorization, AccountId, request);
+            const int orderFee = 0;
+            ApiResponse<InlineResponse201> response;
 
-            order.BrokerId.Add(response.Data.OrderCreateTransaction.Id);
+            lock (_locker)
+            {
+                var request = GenerateOrderRequest(order);
+                response = _apiRest.CreateOrder(Authorization, AccountId, request);
+                order.BrokerId.Add(response.Data.OrderCreateTransaction.Id);
+
+                // send Submitted order event
+                order.PriceCurrency = SecurityProvider.GetSecurity(order.Symbol).SymbolProperties.QuoteCurrency;
+                OnOrderEvent(new OrderEvent(order, DateTime.UtcNow, orderFee) { Status = OrderStatus.Submitted });
+            }
 
             // if market order, find fill quantity and price
             var fill = response.Data.OrderFillTransaction;
@@ -182,15 +193,12 @@ namespace QuantConnect.Brokerages.Oanda
                 }
             }
 
-            // send Submitted order event
-            const int orderFee = 0;
-            order.PriceCurrency = SecurityProvider.GetSecurity(order.Symbol).SymbolProperties.QuoteCurrency;
-            OnOrderEvent(new OrderEvent(order, DateTime.UtcNow, orderFee) { Status = OrderStatus.Submitted });
-
-            if (order.Type == OrderType.Market)
+            if (order.Type == OrderType.Market && order.Status != OrderStatus.Filled)
             {
+                order.Status = OrderStatus.Filled;
+
                 // if market order, also send Filled order event
-                OnOrderEvent(new OrderEvent(order, DateTime.UtcNow, orderFee)
+                OnOrderEvent(new OrderEvent(order, DateTime.UtcNow, orderFee, "Oanda Fill Event")
                 {
                     Status = OrderStatus.Filled,
                     FillPrice = marketOrderFillPrice,
@@ -229,7 +237,7 @@ namespace QuantConnect.Brokerages.Oanda
             if (response.Data.OrderFillTransaction != null)
             {
                 const int orderFee = 0;
-                OnOrderEvent(new OrderEvent(order, DateTime.UtcNow, orderFee)
+                OnOrderEvent(new OrderEvent(order, DateTime.UtcNow, orderFee, "Oanda Fill Event")
                 {
                     Status = OrderStatus.Filled,
                     FillPrice = response.Data.OrderFillTransaction.Price.ToDecimal(),
@@ -339,18 +347,31 @@ namespace QuantConnect.Brokerages.Oanda
                 case "ORDER_FILL":
                     var transaction = obj.ToObject<OrderFillTransaction>();
 
-                    var order = OrderProvider.GetOrderByBrokerageId(transaction.OrderID);
+                    Order order;
+                    lock (_locker)
+                    {
+                        order = OrderProvider.GetOrderByBrokerageId(transaction.OrderID);
+                    }
                     if (order != null)
                     {
-                        order.PriceCurrency = SecurityProvider.GetSecurity(order.Symbol).SymbolProperties.QuoteCurrency;
-
-                        const int orderFee = 0;
-                        OnOrderEvent(new OrderEvent(order, DateTime.UtcNow, orderFee, "Oanda Fill Event")
+                        if (order.Type != OrderType.Market || order.Status != OrderStatus.Filled)
                         {
-                            Status = OrderStatus.Filled,
-                            FillPrice = transaction.Price.ToDecimal(),
-                            FillQuantity = Convert.ToInt32(transaction.Units)
-                        });
+                            order.Status = OrderStatus.Filled;
+
+                            order.PriceCurrency = SecurityProvider.GetSecurity(order.Symbol).SymbolProperties.QuoteCurrency;
+
+                            const int orderFee = 0;
+                            OnOrderEvent(new OrderEvent(order, DateTime.UtcNow, orderFee, "Oanda Fill Event")
+                            {
+                                Status = OrderStatus.Filled,
+                                FillPrice = transaction.Price.ToDecimal(),
+                                FillQuantity = Convert.ToInt32(transaction.Units)
+                            });
+                        }
+                    }
+                    else
+                    {
+                        Log.Error($"OandaBrokerage.OnTransactionDataReceived(): order id not found: {transaction.OrderID}");
                     }
                     break;
             }

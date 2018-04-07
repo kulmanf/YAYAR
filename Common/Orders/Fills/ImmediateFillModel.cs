@@ -1,11 +1,11 @@
 /*
  * QUANTCONNECT.COM - Democratizing Finance, Empowering Individuals.
  * Lean Algorithmic Trading Engine v2.0. Copyright 2014 QuantConnect Corporation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -42,8 +42,8 @@ namespace QuantConnect.Orders.Fills
 
             if (order.Status == OrderStatus.Canceled) return fill;
 
-            // make sure the exchange is open before filling
-            if (!IsExchangeOpen(asset)) return fill;
+            // make sure the exchange is open/normal market hours before filling
+            if (!IsExchangeOpen(asset, false)) return fill;
 
             //Order [fill]price for a market order model is the current security price
             fill.FillPrice = GetPrices(asset, order.Direction).Current;
@@ -87,11 +87,11 @@ namespace QuantConnect.Orders.Fills
             var utcTime = asset.LocalTime.ConvertToUtc(asset.Exchange.TimeZone);
             var fill = new OrderEvent(order, utcTime, 0);
 
-            // make sure the exchange is open before filling
-            if (!IsExchangeOpen(asset)) return fill;
-
             //If its cancelled don't need anymore checks:
             if (order.Status == OrderStatus.Canceled) return fill;
+
+            // make sure the exchange is open/normal market hours before filling
+            if (!IsExchangeOpen(asset, false)) return fill;
 
             //Get the range of prices in the last bar:
             var prices = GetPrices(asset, order.Direction);
@@ -108,7 +108,7 @@ namespace QuantConnect.Orders.Fills
                     {
                         fill.Status = OrderStatus.Filled;
                         // Assuming worse case scenario fill - fill at lowest of the stop & asset price.
-                        fill.FillPrice = Math.Min(order.StopPrice, prices.Current - slip); 
+                        fill.FillPrice = Math.Min(order.StopPrice, prices.Current - slip);
                     }
                     break;
 
@@ -142,9 +142,9 @@ namespace QuantConnect.Orders.Fills
         /// <seealso cref="StopMarketFill(Security, StopMarketOrder)"/>
         /// <seealso cref="SecurityTransactionModel.LimitFill"/>
         /// <remarks>
-        ///     There is no good way to model limit orders with OHLC because we never know whether the market has 
+        ///     There is no good way to model limit orders with OHLC because we never know whether the market has
         ///     gapped past our fill price. We have to make the assumption of a fluid, high volume market.
-        /// 
+        ///
         ///     Stop limit orders we also can't be sure of the order of the H - L values for the limit fill. The assumption
         ///     was made the limit fill will be done with closing price of the bar after the stop has been triggered..
         /// </remarks>
@@ -156,6 +156,9 @@ namespace QuantConnect.Orders.Fills
 
             //If its cancelled don't need anymore checks:
             if (order.Status == OrderStatus.Canceled) return fill;
+
+            // make sure the exchange is open before filling -- allow pre/post market fills to occur
+            if (!IsExchangeOpen(asset, true)) return fill;
 
             //Get the range of prices in the last bar:
             var prices = GetPrices(asset, order.Direction);
@@ -223,10 +226,13 @@ namespace QuantConnect.Orders.Fills
             //If its cancelled don't need anymore checks:
             if (order.Status == OrderStatus.Canceled) return fill;
 
+            // make sure the exchange is open before filling -- allow pre/post market fills to occur
+            if (!IsExchangeOpen(asset, true)) return fill;
+
             //Get the range of prices in the last bar:
             var prices = GetPrices(asset, order.Direction);
 
-            //-> Valid Live/Model Order: 
+            //-> Valid Live/Model Order:
             switch (order.Direction)
             {
                 case OrderDirection.Buy:
@@ -292,8 +298,8 @@ namespace QuantConnect.Orders.Fills
             }
 
             // wait until market open
-            // make sure the exchange is open before filling
-            if (!IsExchangeOpen(asset)) return fill;
+            // make sure the exchange is open/normal market hours before filling
+            if (!IsExchangeOpen(asset, false)) return fill;
 
             fill.FillPrice = GetPrices(asset, order.Direction).Open;
             fill.Status = OrderStatus.Filled;
@@ -337,12 +343,14 @@ namespace QuantConnect.Orders.Fills
 
             var localOrderTime = order.Time.ConvertFromUtc(asset.Exchange.TimeZone);
             var nextMarketClose = asset.Exchange.Hours.GetNextMarketClose(localOrderTime, false);
-                
-            // wait until market closes after the order time 
+
+            // wait until market closes after the order time
             if (asset.LocalTime < nextMarketClose)
             {
                 return fill;
             }
+            // make sure the exchange is open/normal market hours before filling
+            if (!IsExchangeOpen(asset, false)) return fill;
 
             fill.FillPrice = GetPrices(asset, order.Direction).Close;
             fill.Status = OrderStatus.Filled;
@@ -376,7 +384,7 @@ namespace QuantConnect.Orders.Fills
         /// </summary>
         /// <param name="asset">Security asset we're checking</param>
         /// <param name="direction">The order direction, decides whether to pick bid or ask</param>
-        private Prices GetPrices(Security asset, OrderDirection direction)
+        protected virtual Prices GetPrices(Security asset, OrderDirection direction)
         {
             var low = asset.Low;
             var high = asset.High;
@@ -434,13 +442,14 @@ namespace QuantConnect.Orders.Fills
         /// <summary>
         /// Determines if the exchange is open using the current time of the asset
         /// </summary>
-        private static bool IsExchangeOpen(Security asset)
+        private static bool IsExchangeOpen(Security asset, bool allowExtendedMarketHoursFills)
         {
             if (!asset.Exchange.DateTimeIsOpen(asset.LocalTime))
             {
                 // if we're not open at the current time exactly, check the bar size, this handle large sized bars (hours/days)
                 var currentBar = asset.GetLastData();
-                if (asset.LocalTime.Date != currentBar.EndTime.Date || !asset.Exchange.IsOpenDuringBar(currentBar.Time, currentBar.EndTime, false))
+                var isExtendedMarketHours = allowExtendedMarketHoursFills && asset.IsExtendedMarketHours;
+                if (asset.LocalTime.Date != currentBar.EndTime.Date || !asset.Exchange.IsOpenDuringBar(currentBar.Time, currentBar.EndTime, isExtendedMarketHours))
                 {
                     return false;
                 }
@@ -448,7 +457,7 @@ namespace QuantConnect.Orders.Fills
             return true;
         }
 
-        private class Prices
+        public class Prices
         {
             public readonly decimal Current;
             public readonly decimal Open;

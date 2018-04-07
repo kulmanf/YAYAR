@@ -42,7 +42,7 @@ namespace QuantConnect.Lean.Engine.Setup
         /// <summary>
         /// Any errors from the initialization stored here:
         /// </summary>
-        public List<string> Errors { get; set; }
+        public List<Exception> Errors { get; set; }
 
         /// <summary>
         /// Get the maximum runtime for this algorithm job.
@@ -72,7 +72,7 @@ namespace QuantConnect.Lean.Engine.Setup
         /// </summary>
         public BrokerageSetupHandler()
         {
-            Errors = new List<string>();
+            Errors = new List<Exception>();
             MaximumRuntime = TimeSpan.FromDays(10*365);
             MaxOrders = int.MaxValue;
         }
@@ -195,6 +195,9 @@ namespace QuantConnect.Lean.Engine.Setup
                         // set the option chain provider
                         algorithm.SetOptionChainProvider(new CachingOptionChainProvider(new LiveOptionChainProvider()));
 
+                        // set the future chain provider
+                        algorithm.SetFutureChainProvider(new CachingFutureChainProvider(new LiveFutureChainProvider()));
+
                         // If we're going to receive market data from IB,
                         // set the default subscription limit to 100,
                         // algorithms can override this setting in the Initialize method
@@ -206,6 +209,10 @@ namespace QuantConnect.Lean.Engine.Setup
 
                         //Initialise the algorithm, get the required data:
                         algorithm.Initialize();
+
+                        //Finalize Initialization
+                        algorithm.PostInitialize();
+
                         if (liveJob.Brokerage != "PaperBrokerage")
                         {
                             //Zero the CashBook - we'll populate directly from brokerage
@@ -217,7 +224,7 @@ namespace QuantConnect.Lean.Engine.Setup
                     }
                     catch (Exception err)
                     {
-                        AddInitializationError(err.ToString());
+                        AddInitializationError(err.ToString(), err);
                     }
                 }, controls.RamAllocation);
 
@@ -242,7 +249,7 @@ namespace QuantConnect.Lean.Engine.Setup
                 {
                     Log.Error(err);
                     AddInitializationError(string.Format("Error connecting to brokerage: {0}. " +
-                        "This may be caused by incorrect login credentials or an unsupported account type.", err.Message));
+                        "This may be caused by incorrect login credentials or an unsupported account type.", err.Message), err);
                     return false;
                 }
 
@@ -267,7 +274,7 @@ namespace QuantConnect.Lean.Engine.Setup
                 catch (Exception err)
                 {
                     Log.Error(err);
-                    AddInitializationError("Error getting cash balance from brokerage: " + err.Message);
+                    AddInitializationError("Error getting cash balance from brokerage: " + err.Message, err);
                     return false;
                 }
 
@@ -279,7 +286,7 @@ namespace QuantConnect.Lean.Engine.Setup
                 catch (Exception err)
                 {
                     Log.Error(err);
-                    AddInitializationError("Error getting open orders from brokerage: " + err.Message);
+                    AddInitializationError("Error getting open orders from brokerage: " + err.Message, err);
                     return false;
                 }
 
@@ -346,11 +353,9 @@ namespace QuantConnect.Lean.Engine.Setup
                 catch (Exception err)
                 {
                     Log.Error(err);
-                    AddInitializationError("Error getting account holdings from brokerage: " + err.Message);
+                    AddInitializationError("Error getting account holdings from brokerage: " + err.Message, err);
                     return false;
                 }
-
-                algorithm.PostInitialize();
 
                 //Set the starting portfolio value for the strategy to calculate performance:
                 StartingPortfolioValue = algorithm.Portfolio.TotalPortfolioValue;
@@ -358,7 +363,7 @@ namespace QuantConnect.Lean.Engine.Setup
             }
             catch (Exception err)
             {
-                AddInitializationError(err.ToString());
+                AddInitializationError(err.ToString(), err);
             }
             finally
             {
@@ -415,9 +420,10 @@ namespace QuantConnect.Lean.Engine.Setup
         /// Adds initializaion error to the Errors list
         /// </summary>
         /// <param name="message">The error message to be added</param>
-        private void AddInitializationError(string message)
+        /// <param name="inner">The inner exception being wrapped</param>
+        private void AddInitializationError(string message, Exception inner = null)
         {
-            Errors.Add("Failed to initialize algorithm: " + message);
+            Errors.Add(new AlgorithmSetupException("During the algorithm initialization, the following exception has occurred: " + message, inner));
         }
 
         /// <summary>

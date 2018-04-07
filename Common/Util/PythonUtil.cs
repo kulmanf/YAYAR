@@ -16,6 +16,7 @@
 
 using Python.Runtime;
 using System;
+using System.Linq;
 
 namespace QuantConnect.Util
 {
@@ -84,6 +85,54 @@ namespace QuantConnect.Util
                 dynamic method = GetModule().GetAttr("to_func");
                 return method(pyObject, typeof(T1), typeof(T2)).AsManagedObject(typeof(Func<T1, T2>));
             }
+        }
+
+        /// <summary>
+        /// Parsers <see cref="PythonException.StackTrace"/> into a readable message 
+        /// </summary>
+        /// <param name="value">String with the stacktrace information</param>
+        /// <returns>String with relevant part of the stacktrace</returns>
+        public static string PythonExceptionStackParser(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return string.Empty;
+            }
+
+            // Get the directory where the user files are located
+            var baseScript = value.GetStringBetweenChars('\"', '\"');
+            var length = Math.Max(baseScript.LastIndexOf('/'), baseScript.LastIndexOf('\\'));
+            if (length < 0)
+            {
+                return string.Empty;
+            }
+            var directory = baseScript.Substring(0, 1 + length);
+
+            // Format the information in every line
+            var lines = value.Substring(1, value.Length - 1)
+                .Split(new[] { "\'  File " }, StringSplitOptions.RemoveEmptyEntries)
+                .Where(x => x.Contains(directory))
+                .Where(x => x.Split(',').Length > 2)
+                .Select(x =>
+                {
+                    var info = x.Replace(directory, string.Empty).Split(',');
+                    var line = info[0].GetStringBetweenChars('\"', '\"');
+                    line = $" in {line}:{info[1].Trim()}";
+
+                    info = info[2].Split(new[] { "\\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    line = $" {info[0].Replace("in", "at")}{line}";
+
+                    // If we have the exact statement, add it to the error line
+                    if (info.Length > 2) line += $" :: {info[1].Trim()}";
+
+                    return line;
+                });
+
+            var errorLine = string.Join(Environment.NewLine, lines);
+
+            return string.IsNullOrWhiteSpace(errorLine)
+                ? string.Empty
+                : $"{Environment.NewLine}{errorLine}{Environment.NewLine}";
         }
 
         /// <summary>

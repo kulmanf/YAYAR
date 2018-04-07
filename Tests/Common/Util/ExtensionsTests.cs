@@ -16,8 +16,12 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Python.Runtime;
+using QuantConnect.Data.Market;
+using QuantConnect.Indicators;
 using QuantConnect.Securities;
 
 namespace QuantConnect.Tests.Common.Util
@@ -296,6 +300,141 @@ namespace QuantConnect.Tests.Common.Util
             var roundedTime = time.RoundDownInTimeZone(Time.OneDay, exchangeTimeZone, dataTimeZone);
             Assert.AreEqual(time, roundedTime);
         }
+
+        [Test]
+        public void GetStringBetweenCharsTests()
+        {
+            const string expected = "python3.6";
+
+            // Different characters cases
+            var input = "[ python3.6 ]";
+            var actual = input.GetStringBetweenChars('[', ']');
+            Assert.AreEqual(expected, actual);
+
+            input = "[ python3.6 ] [ python2.7 ]";
+            actual = input.GetStringBetweenChars('[', ']');
+            Assert.AreEqual(expected, actual);
+
+            input = "[ python2.7 [ python3.6 ] ]";
+            actual = input.GetStringBetweenChars('[', ']');
+            Assert.AreEqual(expected, actual);
+
+            // Same character cases
+            input = "\'python3.6\'";
+            actual = input.GetStringBetweenChars('\'', '\'');
+            Assert.AreEqual(expected, actual);
+
+            input = "\' python3.6 \' \' python2.7 \'";
+            actual = input.GetStringBetweenChars('\'', '\'');
+            Assert.AreEqual(expected, actual);
+
+            // In this case, it is not equal
+            input = "\' python2.7 \' python3.6 \' \'";
+            actual = input.GetStringBetweenChars('\'', '\'');
+            Assert.AreNotEqual(expected, actual);
+        }
+
+        [Test, Ignore]
+        public void PyObjectTryConvertQuoteBar()
+        {
+            // Wrap a QuoteBar around a PyObject and convert it back
+            var value = ConvertToPyObject(new QuoteBar());
+
+            QuoteBar quoteBar;
+            var canConvert = value.TryConvert(out quoteBar);
+            Assert.IsTrue(canConvert);
+            Assert.IsNotNull(quoteBar);
+            Assert.IsAssignableFrom<QuoteBar>(quoteBar);
+        }
+
+        [Test, Ignore]
+        public void PyObjectTryConvertSMA()
+        {
+            // Wrap a SimpleMovingAverage around a PyObject and convert it back
+            var value = ConvertToPyObject(new SimpleMovingAverage(14));
+
+            IndicatorBase<IndicatorDataPoint> indicatorBaseDataPoint;
+            var canConvert = value.TryConvert(out indicatorBaseDataPoint);
+            Assert.IsTrue(canConvert);
+            Assert.IsNotNull(indicatorBaseDataPoint);
+            Assert.IsAssignableFrom<SimpleMovingAverage>(indicatorBaseDataPoint);
+        }
+
+        [Test, Ignore]
+        public void PyObjectTryConvertATR()
+        {
+            // Wrap a AverageTrueRange around a PyObject and convert it back
+            var value = ConvertToPyObject(new AverageTrueRange(14, MovingAverageType.Simple));
+
+            IndicatorBase<IBaseDataBar> indicatorBaseDataBar;
+            var canConvert = value.TryConvert(out indicatorBaseDataBar);
+            Assert.IsTrue(canConvert);
+            Assert.IsNotNull(indicatorBaseDataBar);
+            Assert.IsAssignableFrom<AverageTrueRange>(indicatorBaseDataBar);
+        }
+
+        [Test, Ignore]
+        public void PyObjectTryConvertAD()
+        {
+            // Wrap a AccumulationDistribution around a PyObject and convert it back
+            var value = ConvertToPyObject(new AccumulationDistribution("AD"));
+
+            IndicatorBase<TradeBar> indicatorBaseTradeBar;
+            var canConvert = value.TryConvert(out indicatorBaseTradeBar);
+            Assert.IsTrue(canConvert);
+            Assert.IsNotNull(indicatorBaseTradeBar);
+            Assert.IsAssignableFrom<AccumulationDistribution>(indicatorBaseTradeBar);
+
+        }
+
+        [Test, Ignore]
+        public void PyObjectTryConvertFailCSharp()
+        {
+            // Try to convert a AccumulationDistribution as a QuoteBar
+            var value = ConvertToPyObject(new AccumulationDistribution("AD"));
+
+            QuoteBar quoteBar;
+            bool canConvert = value.TryConvert(out quoteBar);
+            Assert.IsFalse(canConvert);
+            Assert.IsNull(quoteBar);
+        }
+
+        [Test, Ignore]
+        public void PyObjectTryConvertFailPython()
+        {
+            using (Py.GIL())
+            {
+                // Try to convert a python object as a IndicatorBase<TradeBar>
+                var module = PythonEngine.ModuleFromString(Guid.NewGuid().ToString(), "class A:\n    pass");
+                var value = module.GetAttr("A").Invoke();
+
+                IndicatorBase<TradeBar> indicatorBaseTradeBar;
+                bool canConvert = value.TryConvert(out indicatorBaseTradeBar);
+                Assert.IsFalse(canConvert);
+                Assert.IsNull(indicatorBaseTradeBar);
+            }
+        }
+
+        [Test]
+        public void BatchByDoesNotDropItems()
+        {
+            var list = new List<int> {1, 2, 3, 4, 5};
+            var by2 = list.BatchBy(2).ToList();
+            Assert.AreEqual(3, by2.Count);
+            Assert.AreEqual(2, by2[0].Count);
+            Assert.AreEqual(2, by2[1].Count);
+            Assert.AreEqual(1, by2[2].Count);
+            CollectionAssert.AreEqual(list, by2.SelectMany(x => x));
+        }
+
+        private PyObject ConvertToPyObject(object value)
+        {
+            using (Py.GIL())
+            {
+                return value.ToPython();
+            }
+        }
+
 
         private class Super<T>
         {

@@ -23,13 +23,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AddRemoveSecurityRegressionAlgorithm.py" />
+    <Compile Include="CustomIndicatorAlgorithm.py" />
+    <Compile Include="CustomVolatilityModelAlgorithm.py" />
     <Compile Include="BasicTemplateAlgorithm.py" />
     <Compile Include="BasicTemplateDailyAlgorithm.py" />
     <Compile Include="BasicTemplateFillForwardAlgorithm.py" />
     <Compile Include="BasicTemplateForexAlgorithm.py" />
+    <Compile Include="BasicTemplateFrameworkAlgorithm.py" />
     <Compile Include="BasicTemplateFuturesAlgorithm.py" />
     <Compile Include="BasicTemplateFuturesConsolidationAlgorithm.py" />
     <Compile Include="BasicTemplateFuturesHistoryAlgorithm.py" />
+    <Compile Include="BasicTemplateLibrary.py" />
     <Compile Include="BasicTemplateOptionsAlgorithm.py" />
     <Compile Include="BasicTemplateOptionsFilterUniverseAlgorithm.py" />
     <Compile Include="BasicTemplateOptionsHistoryAlgorithm.py" />
@@ -58,17 +62,21 @@
     <Compile Include="EmaCrossUniverseSelectionAlgorithm.py" />
     <Compile Include="ETFGlobalRotationAlgorithm.py" />
     <Compile Include="FilteredIdentityAlgorithm.py" />
+    <Compile Include="FinancialAdvisorDemoAlgorithm.py" />
     <Compile Include="FractionalQuantityRegressionAlgorithm.py" />
     <Compile Include="FuturesMomentumAlgorithm.py" />
+    <Compile Include="HistoryAlgorithm.py" />
     <Compile Include="HistoryAndWarmupRegressionAlgorithm.py" />
     <Compile Include="HourReverseSplitRegressionAlgorithm.py" />
     <Compile Include="HourSplitRegressionAlgorithm.py" />
+    <Compile Include="IndicatorSuiteAlgorithm.py" />
     <Compile Include="LimitFillRegressionAlgorithm.py" />
     <Compile Include="MACDTrendAlgorithm.py" />
     <Compile Include="main.py" />
     <Compile Include="MarginCallEventsAlgorithm.py" />
     <Compile Include="MarketOnOpenOnCloseAlgorithm.py" />
     <Compile Include="MovingAverageCrossAlgorithm.py" />
+    <Compile Include="MultipleSymbolConsolidationAlgorithm.py" />
     <Compile Include="OptionChainConsistencyRegressionAlgorithm.py" />
     <Compile Include="OptionChainProviderAlgorithm.py" />
     <Compile Include="OptionExerciseAssignRegressionAlgorithm.py" />
