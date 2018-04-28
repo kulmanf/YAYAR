@@ -262,3 +262,5 @@ Launcher/Plugins/*
 
 # Idea
 *.idea/.idea.QuantConnect.Lean/.idea/*
+
+\.idea/\.idea\.QuantConnect\.Lean/\.idea/
