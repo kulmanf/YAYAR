@@ -3,7 +3,7 @@
 namespace QuantConnect.Algorithm.CSharp
 {
 
-    public class ButtomReversalAlgorithm : QCAlgorithm
+    public class FkuButtomReversalAlgorithm : QCAlgorithm
     {
         private Symbol _spy = QuantConnect.Symbol.Create("SPY", SecurityType.Equity, Market.USA);
 
@@ -21,7 +21,7 @@ namespace QuantConnect.Algorithm.CSharp
             if (!Portfolio.Invested)
             {
                 SetHoldings(_spy, 1);
-                Debug("Purchased Stock");
+                Debug("Purchased Stock - mighty mac monkey face");
                 
             }
         }
