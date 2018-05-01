@@ -21,8 +21,8 @@ namespace QuantConnect.Algorithm.CSharp
                     break;
                 case FkuMode.Backtest:
                     Symbol = Symbol.Create("FB", SecurityType.Equity, Market.USA);
-                    algorithm.SetStartDate(2018, 04, 25); //Set Start Date
-                    algorithm.SetEndDate(2018, 04, 28); //Set End Date
+                    algorithm.SetStartDate(2018, 04, 01); //Set Start Date
+                    algorithm.SetEndDate(2018, 04, 30); //Set End Date
                     algorithm.AddEquity(Symbol, Resolution.Minute);
                     break;
                 case FkuMode.Regression:
