@@ -1,4 +1,5 @@
-﻿using Accord.Math;
+﻿using System.Collections.Generic;
+using Accord.Math;
 using QuantConnect.Brokerages;
 using QuantConnect.Data;
 
@@ -13,7 +14,7 @@ namespace QuantConnect.Algorithm.CSharp
         private FkuPortfolio _portfolio = new FkuPortfolio();
         private FkuSeller _seller = new FkuSeller();
         private FkuExecutor _executor = new FkuExecutor();
-        private FkuRiskManagement _risk = new FkuRiskManagement();
+        private FkuRiskManager _risk = new FkuRiskManager();
 
         public override void Initialize()
         {
@@ -28,8 +29,8 @@ namespace QuantConnect.Algorithm.CSharp
         }
 
         public override void OnData(Slice data)
-        { 
-            _alpha.OnData(data);
+        {
+            var signals = _alpha.OnData(data);
             _portfolio.OnData(data);
             _seller.OnData(data);
             _executor.OnData(data);

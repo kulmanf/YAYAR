@@ -2,7 +2,7 @@
 
 namespace QuantConnect.Algorithm.CSharp
 {
-    public class FkuRiskManagement
+    public class FkuRiskManager
     {
         internal void Initialize()
         {

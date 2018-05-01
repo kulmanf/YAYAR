@@ -99,7 +99,7 @@
     <Compile Include="fku\src\FkuButtomReversalAlgorithm.cs" />
     <Compile Include="fku\src\FkuExecutor.cs" />
     <Compile Include="fku\src\FkuPortfolio.cs" />
-    <Compile Include="fku\src\FkuRiskManagement.cs" />
+    <Compile Include="fku\src\FkuRiskManager.cs" />
     <Compile Include="fku\src\FkuSeller.cs" />
     <Compile Include="fku\src\FkuUniverse.cs" />
     <Compile Include="ForexInternalFeedOnDataHigherResolutionRegressionAlgorithm.cs" />

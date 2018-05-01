@@ -46,9 +46,9 @@ namespace QuantConnect.Algorithm.CSharp
             }
         }
 
-        internal IEnumerable<Insight> OnData(Slice data)
+        internal List<Signal> OnData(Slice data)
         {
-            var insights = new List<Insight>();
+            var signals = new List<Signal>();
             foreach (var kvp in _symbolDataBySymbol)
             {
                 var symbol = kvp.Key;
@@ -58,16 +58,10 @@ namespace QuantConnect.Algorithm.CSharp
 
                 if (state != previousState && rsi.IsReady)
                 {
-                    var insightPeriod = _resolution.ToTimeSpan().Multiply(_period);
-
                     switch (state)
                     {
                         case State.TrippedLow:
-                            insights.Add(new Insight(symbol, InsightType.Price, InsightDirection.Up, insightPeriod));
-                            break;
-
-                        case State.TrippedHigh:
-                            insights.Add(new Insight(symbol, InsightType.Price, InsightDirection.Down, insightPeriod));
+                            signals.Add(new Signal(symbol, rsi));
                             break;
                     }
                 }
@@ -75,8 +69,8 @@ namespace QuantConnect.Algorithm.CSharp
                 kvp.Value.State = state;
             }
 
-            insights.ForEach(insight => _algorithm.Debug(insight.ToString()));
-            return insights;
+            signals.ForEach(signal => _algorithm.Debug(signal.ToString()));
+            return signals;
         }
 
 
@@ -109,6 +103,23 @@ namespace QuantConnect.Algorithm.CSharp
             }
 
             return previous;
+        }
+
+        internal class Signal
+        {
+            internal Symbol Symbol { get; }
+            internal RelativeStrengthIndex RSI { get; }
+
+            internal Signal(Symbol symbol, RelativeStrengthIndex rsi)
+            {
+                Symbol = symbol;
+                RSI = rsi;
+            }
+
+            public override string ToString()
+            {
+                return Symbol + ' ' + RSI;
+            }
         }
 
         private class SymbolData
