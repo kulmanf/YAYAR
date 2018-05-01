@@ -11,7 +11,7 @@ namespace QuantConnect.Algorithm.CSharp
 
     internal class FkuUniverseSelection
     {
-        public void Initialize(QCAlgorithm algorithm, FkuMode fkuMode)
+        internal void Initialize(QCAlgorithm algorithm, FkuMode fkuMode)
         {
             switch (fkuMode)
             {
