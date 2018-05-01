@@ -1,4 +1,5 @@
-﻿using QuantConnect.Brokerages;
+﻿using Accord.Math;
+using QuantConnect.Brokerages;
 using QuantConnect.Data;
 
 namespace QuantConnect.Algorithm.CSharp
@@ -13,7 +14,6 @@ namespace QuantConnect.Algorithm.CSharp
         private FkuSeller _seller = new FkuSeller();
         private FkuExecutor _executor = new FkuExecutor();
         private FkuRiskManagement _risk = new FkuRiskManagement();
-
 
         public override void Initialize()
         {
@@ -35,7 +35,7 @@ namespace QuantConnect.Algorithm.CSharp
             _executor.OnData(data);
             _risk.OnData(data);
 
-            if (!Portfolio.Invested)
+            if (!Portfolio.Invested && Environment.IsEqual(FkuMode.Regression))
             {
                 SetHoldings(_universe.Symbol, 1);
                 Debug("Purchased Stock - mighty mac monkey face");
