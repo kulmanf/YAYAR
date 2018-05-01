@@ -9,7 +9,7 @@ namespace QuantConnect.Algorithm.CSharp
         Sell
     }
     
-    internal class FkuAlphaCreation
+    internal class FkuAlpha
     {
         internal FkuInsight Insight { get; private set; }
         

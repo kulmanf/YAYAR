@@ -9,7 +9,7 @@ namespace QuantConnect.Algorithm.CSharp
         Regression
     }
 
-    internal class FkuUniverseSelection
+    internal class FkuUniverse
     {
         internal void Initialize(QCAlgorithm algorithm, FkuMode fkuMode)
         {

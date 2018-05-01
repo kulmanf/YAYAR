@@ -95,9 +95,13 @@
     <Compile Include="Benchmarks\EmptySingleSecuritySecondEquityBenchmark.cs" />
     <Compile Include="CustomFrameworkModelsAlgorithm.cs" />
     <Compile Include="FinancialAdvisorDemoAlgorithm.cs" />
-    <Compile Include="fku\src\FkuAlphaCreation.cs" />
+    <Compile Include="fku\src\FkuAlpha.cs" />
     <Compile Include="fku\src\FkuButtomReversalAlgorithm.cs" />
-    <Compile Include="fku\src\FkuUniverseSelection.cs" />
+    <Compile Include="fku\src\FkuExecutor.cs" />
+    <Compile Include="fku\src\FkuPortfolio.cs" />
+    <Compile Include="fku\src\FkuRiskManagement.cs" />
+    <Compile Include="fku\src\FkuSeller.cs" />
+    <Compile Include="fku\src\FkuUniverse.cs" />
     <Compile Include="ForexInternalFeedOnDataHigherResolutionRegressionAlgorithm.cs" />
     <Compile Include="ForexInternalFeedOnDataSameResolutionRegressionAlgorithm.cs" />
     <Compile Include="RollingWindowAlgorithm.cs" />
