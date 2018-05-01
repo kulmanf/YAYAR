@@ -20,7 +20,7 @@ namespace QuantConnect.Algorithm.CSharp
             SetCash(10000);
             SetBrokerageModel(BrokerageName.InteractiveBrokersBrokerage, AccountType.Cash);
             _universe.Initialize(this, Environment);
-            _alpha.Initialize();
+            _alpha.Initialize(this, _universe.Symbol);
             _portfolio.Initialize();
             _seller.Initialize();
             _executor.Initialize();
