@@ -22,7 +22,7 @@ namespace QuantConnect.Algorithm.CSharp
             SetBrokerageModel(BrokerageName.InteractiveBrokersBrokerage, AccountType.Cash);
             _universe.Initialize(this, Environment);
             _alpha.Initialize(this, _universe.Symbol);
-            _portfolio.Initialize();
+            _portfolio.Initialize(this, _universe.Symbol);
             _seller.Initialize();
             _executor.Initialize();
             _risk.Initialize();
@@ -31,7 +31,7 @@ namespace QuantConnect.Algorithm.CSharp
         public override void OnData(Slice data)
         {
             var signals = _alpha.OnData(data);
-            _portfolio.OnData(data);
+            var positionSize = _portfolio.OnData(data);
             _seller.OnData(data);
             _executor.OnData(data);
             _risk.OnData(data);
