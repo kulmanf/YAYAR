@@ -39,7 +39,7 @@ namespace QuantConnect.Algorithm.CSharp
 
         private int postionSize(decimal price)
         {
-            return Convert.ToInt32(Math.Round(MAX_POSITION_VALUE / price, 0));
+            return Convert.ToInt32(Math.Floor(MAX_POSITION_VALUE / price));
         }
 
         private decimal availableCash()

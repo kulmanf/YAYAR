@@ -24,7 +24,7 @@ namespace QuantConnect.Algorithm.CSharp
             _alpha.Initialize(this, _universe.Symbol);
             _portfolio.Initialize(this, _universe.Symbol);
             _seller.Initialize();
-            _executor.Initialize();
+            _executor.Initialize(this, _universe.Symbol);
             _risk.Initialize();
         }
 
@@ -33,14 +33,14 @@ namespace QuantConnect.Algorithm.CSharp
             var signals = _alpha.OnData(data);
             var positionSize = _portfolio.OnData(data);
             _seller.OnData(data);
-            _executor.OnData(data);
+            _executor.OnData(data, signals, positionSize);
             _risk.OnData(data);
 
-            if (!Portfolio.Invested && Environment.IsEqual(FkuMode.Regression))
-            {
-                SetHoldings(_universe.Symbol, 1);
-                Debug("Purchased Stock - mighty mac monkey face");
-            }
+//            if (!Portfolio.Invested && Environment.IsEqual(FkuMode.Regression))
+//            {
+//                SetHoldings(_universe.Symbol, 1);
+//                Debug("Purchased Stock - mighty mac monkey face");
+//            }
         }
     }
 }
