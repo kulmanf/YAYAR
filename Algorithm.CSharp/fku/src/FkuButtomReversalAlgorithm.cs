@@ -23,7 +23,7 @@ namespace QuantConnect.Algorithm.CSharp
             _universe.Initialize(this, Environment);
             _alpha.Initialize(this, _universe.Symbol);
             _portfolio.Initialize(this, _universe.Symbol);
-            _seller.Initialize();
+            _seller.Initialize(this);
             _executor.Initialize(this, _universe.Symbol);
             _risk.Initialize();
         }
@@ -32,8 +32,9 @@ namespace QuantConnect.Algorithm.CSharp
         {
             var signals = _alpha.OnData(data);
             var positionSize = _portfolio.OnData(data);
-            _seller.OnData(data);
-            _executor.OnData(data, signals, positionSize);
+            var sellSignals = _seller.OnData(data);
+            _executor.OnBuy(data, signals, positionSize);
+            _executor.OnSell(sellSignals);
             _risk.OnData(data);
 
 //            if (!Portfolio.Invested && Environment.IsEqual(FkuMode.Regression))
