@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Accord.Math;
-using QuantConnect.Brokerages;
+﻿using QuantConnect.Brokerages;
 using QuantConnect.Data;
 
 namespace QuantConnect.Algorithm.CSharp
