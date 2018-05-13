@@ -35,6 +35,12 @@ namespace QuantConnect.Algorithm.CSharp
                     return isWin || isStop;
                 }).Select(securityHolding => true).ToList();
         }
+        
+        internal void LogDaily()
+        {
+            var message = _algorithm.Time + " - FkuSeller - ";
+            _algorithm.Log(message);
+        }
 
         private bool IsSellWin(decimal buyPrice, decimal currentPrice)
         {

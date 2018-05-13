@@ -25,7 +25,17 @@ namespace QuantConnect.Algorithm.CSharp
             _portfolio.Initialize(this, _universe.Symbol);
             _seller.Initialize(this);
             _executor.Initialize(this, _universe.Symbol);
-            _risk.Initialize();
+            _risk.Initialize(this);
+
+            Schedule.On(DateRules.EveryDay(), TimeRules.At(8,0), () =>
+            {
+                _universe.LogDaily();
+                _alpha.LogDaily();
+                _portfolio.LogDaily();
+                _seller.LogDaily();
+                _executor.LogDaily();
+                _risk.LogDaily();
+            });
         }
 
         public override void OnData(Slice data)

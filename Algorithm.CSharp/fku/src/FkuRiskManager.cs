@@ -4,9 +4,13 @@ namespace QuantConnect.Algorithm.CSharp
 {
     public class FkuRiskManager
     {
-        internal void Initialize()
+        private QCAlgorithm _algorithm;
+        
+        internal void Initialize(QCAlgorithm algorithm)
         {
-                // Get open stop orders
+            _algorithm = algorithm;
+
+            // Get open stop orders
         }
 
         internal void OnData(Slice data)
@@ -17,6 +21,12 @@ namespace QuantConnect.Algorithm.CSharp
             
             // Place market stop order (-5%)
                 
+        }
+        
+        internal void LogDaily()
+        {
+            var message = _algorithm.Time + " - FkuRiskManager - ";
+            _algorithm.Log(message);
         }
     }
 }

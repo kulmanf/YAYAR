@@ -11,8 +11,14 @@ namespace QuantConnect.Algorithm.CSharp
 
     internal class FkuUniverse
     {
+        private QCAlgorithm _algorithm;
+        
+        internal Symbol Symbol { get; private set; }
+        
         internal void Initialize(QCAlgorithm algorithm, FkuMode fkuMode)
         {
+            _algorithm = algorithm;
+            
             switch (fkuMode)
             {
                 case FkuMode.InteractiveBrokers:
@@ -36,6 +42,11 @@ namespace QuantConnect.Algorithm.CSharp
             }
         }
 
-        internal Symbol Symbol { get; private set; }
+        internal void LogDaily()
+        {
+            var message = _algorithm.Time + " - FkuUniverse - " + "Symbol: " + Symbol;
+            _algorithm.Log(message);
+        }
+
     }
 }

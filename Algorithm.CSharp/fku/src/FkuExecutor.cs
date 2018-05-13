@@ -44,5 +44,11 @@ namespace QuantConnect.Algorithm.CSharp
             _algorithm.SetHoldings(_symbol, 0);
             _algorithm.Debug("Set holdings to zero: " + _symbol);
         }
+        
+        internal void LogDaily()
+        {
+            var message = _algorithm.Time + " - FkuExecutor - ";
+            _algorithm.Log(message);
+        }
     }
 }

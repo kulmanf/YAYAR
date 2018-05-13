@@ -73,6 +73,12 @@ namespace QuantConnect.Algorithm.CSharp
             signals.ForEach(signal => _algorithm.Debug(dateTime + " " + signal.ToString()));
             return signals;
         }
+        
+        internal void LogDaily()
+        {
+            var message = _algorithm.Time + " - FkuAlpha - ";
+            _algorithm.Log(message);
+        }
 
 
         private State GetState(RelativeStrengthIndex rsi, State previous)

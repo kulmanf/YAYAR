@@ -36,6 +36,12 @@ namespace QuantConnect.Algorithm.CSharp
             }
             return 0;
         }
+        
+        internal void LogDaily()
+        {
+            var message = _algorithm.Time + " - FkuPortfolio - ";
+            _algorithm.Log(message);
+        }
 
         private int postionSize(decimal price)
         {
