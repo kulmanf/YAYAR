@@ -69,7 +69,8 @@ namespace QuantConnect.Algorithm.CSharp
                 kvp.Value.State = state;
             }
 
-            signals.ForEach(signal => _algorithm.Debug(signal.ToString()));
+            var dateTime = _algorithm.Time;
+            signals.ForEach(signal => _algorithm.Debug(dateTime + " " + signal.ToString()));
             return signals;
         }
 
