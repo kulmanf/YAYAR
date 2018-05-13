@@ -47,8 +47,11 @@ namespace QuantConnect.Algorithm.CSharp
         
         internal void LogDaily()
         {
-            var message = _algorithm.Time + " - FkuExecutor - ";
-            _algorithm.Log(message);
+            var invested = _algorithm.Portfolio.Invested;
+            var openOrders = _algorithm.Transactions.GetOpenOrders().Count;
+            var stamp = _algorithm.Time + " [FkuExecutor]"; 
+            _algorithm.Log(stamp + " Invested: " + invested );
+            _algorithm.Log(stamp + " Open Orders: " + openOrders);
         }
     }
 }
