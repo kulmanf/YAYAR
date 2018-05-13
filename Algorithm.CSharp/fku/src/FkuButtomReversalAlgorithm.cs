@@ -7,8 +7,6 @@ namespace QuantConnect.Algorithm.CSharp
 {
     public class FkuButtomReversalAlgorithm : QCAlgorithm
     {
-        private const FkuMode Environment = FkuMode.Regression;
-
         private FkuUniverse _universe = new FkuUniverse();
         private FkuAlpha _alpha = new FkuAlpha();
         private FkuPortfolio _portfolio = new FkuPortfolio();
@@ -20,7 +18,7 @@ namespace QuantConnect.Algorithm.CSharp
         {
             SetCash(10000);
             SetBrokerageModel(BrokerageName.InteractiveBrokersBrokerage, AccountType.Cash);
-            _universe.Initialize(this, Environment);
+            _universe.Initialize(this, FkuConfiguration.Environment);
             _alpha.Initialize(this, _universe.Symbol);
             _portfolio.Initialize(this, _universe.Symbol);
             _seller.Initialize(this);
@@ -46,12 +44,6 @@ namespace QuantConnect.Algorithm.CSharp
             _executor.OnBuy(data, signals, positionSize);
             _executor.OnSell(sellSignals);
             _risk.OnData(data);
-
-//            if (!Portfolio.Invested && Environment.IsEqual(FkuMode.Regression))
-//            {
-//                SetHoldings(_universe.Symbol, 1);
-//                Debug("Purchased Stock - mighty mac monkey face");
-//            }
         }
     }
 }
