@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using QuantConnect.Data;
 
@@ -7,7 +8,7 @@ namespace QuantConnect.Algorithm.CSharp
     public class FkuExecutor
     {
         private QCAlgorithm _algorithm;
-        private Symbol _symbol;
+        private Symbol _symbol; 
 
         internal void Initialize(QCAlgorithm algorithm, Symbol symbol)
         {
@@ -28,7 +29,7 @@ namespace QuantConnect.Algorithm.CSharp
             if (_algorithm.Transactions.GetOpenOrders().Count > 0) return;
 
             var orderTicket = _algorithm.MarketOrder(_symbol, positionSize);
-            _algorithm.Debug("Ordered: " + orderTicket.Symbol + " " + orderTicket.Quantity);
+            Log("Ordered: " + orderTicket.Symbol + " " + orderTicket.Quantity);
         }
 
         internal void OnSell(List<bool> signals)
@@ -37,21 +38,24 @@ namespace QuantConnect.Algorithm.CSharp
             
             if (!_algorithm.IsMarketOpen(_symbol)) return;
 
-            if(_algorithm.Portfolio.Invested) return;
+            if(!_algorithm.Portfolio.Invested) return;
 
             if (_algorithm.Transactions.GetOpenOrders().Count > 0) return;
 
             _algorithm.SetHoldings(_symbol, 0);
-            _algorithm.Debug("Set holdings to zero: " + _symbol);
+            Log("Set holdings to zero: " + _symbol);
         }
         
         internal void LogDaily()
         {
-            var invested = _algorithm.Portfolio.Invested;
-            var openOrders = _algorithm.Transactions.GetOpenOrders().Count;
-            var stamp = _algorithm.Time + " [FkuExecutor]"; 
-            _algorithm.Log(stamp + " Invested: " + invested );
-            _algorithm.Log(stamp + " Open Orders: " + openOrders);
+            Log("Invested: " + _algorithm.Portfolio.Invested);
+            Log("Open Orders: " + _algorithm.Transactions.GetOpenOrders().Count);
+        }
+
+        private void Log(string message)
+        {
+            var stamp = _algorithm.Time + " [FkuExecutor] "; 
+            _algorithm.Log(stamp + message);
         }
     }
 }
