@@ -11,9 +11,6 @@ namespace QuantConnect.Algorithm.CSharp
 {
     public class FkuSeller
     {
-        private const decimal WinPercent = 1; // 1%
-        private const decimal LosePercent = -0.5m;
-        
         private QCAlgorithm _algorithm;
         private SecurityPortfolioManager _portfolioManager;
         
@@ -45,13 +42,13 @@ namespace QuantConnect.Algorithm.CSharp
         private bool IsSellWin(decimal buyPrice, decimal currentPrice)
         {
             var percentDiff = PercentDiff(buyPrice, currentPrice);
-            return percentDiff > WinPercent;
+            return percentDiff > FkuConfiguration.WinPercent;
         }
         
         private bool IsSellStop(decimal buyPrice, decimal currentPrice)
         {
             var percentDiff = PercentDiff(buyPrice, currentPrice);
-            return percentDiff < LosePercent;
+            return percentDiff < FkuConfiguration.LosePercent;
         }
 
         public static decimal PercentDiff(decimal oldPrice, decimal newPrice)
