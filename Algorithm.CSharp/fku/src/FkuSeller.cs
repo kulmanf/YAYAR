@@ -54,10 +54,10 @@ namespace QuantConnect.Algorithm.CSharp
             return percentDiff < LosePercent;
         }
 
-        private static decimal PercentDiff(decimal oldPrice, decimal newPrice)
+        public static decimal PercentDiff(decimal oldPrice, decimal newPrice)
         {
             var diff = newPrice - oldPrice;
-            return diff / oldPrice * 100;
+            return diff / Math.Max(oldPrice, 1) * 100;
         }
     }
 }

@@ -36,11 +36,21 @@ namespace QuantConnect.Algorithm.CSharp
             }
             return 0;
         }
-        
+            
         internal void LogDaily()
         {
-            var message = _algorithm.Time + " - FkuPortfolio - ";
-            _algorithm.Log(message);
+            var stamp = _algorithm.Time + " [FkuPortfolio]";
+            _algorithm.Log(stamp + " Cash: " + _portfolioManager.Cash);
+            _algorithm.Log(stamp + " Number of securities: " + _portfolioManager.Count);
+            _algorithm.Log(stamp + " TotalPortfolioValue: " + _portfolioManager.TotalPortfolioValue);
+            _portfolioManager.Values.ToList().ForEach(securityHolding =>
+            {
+                _algorithm.Log(stamp + " SecurityHolding: "+ securityHolding.Symbol 
+                               + " AveragePrice " + Math.Round(securityHolding.AveragePrice, 3)
+                               + " Price " + Math.Round(securityHolding.Price,3)
+                               + " PercentDiff " + Math.Round(FkuSeller.PercentDiff(securityHolding.AveragePrice, securityHolding.Price), 3)
+                               + " Quantity " + securityHolding.Quantity);
+            });    
         }
 
         private int postionSize(decimal price)
