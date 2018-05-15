@@ -27,7 +27,7 @@ namespace QuantConnect.Algorithm.CSharp
         {
             if (_portfolioManager.Invested) return 0;
 
-            if (_transactionManager.OrdersCount > 0) return 0;
+            if (_transactionManager.GetOpenOrders().Count > 0) return 0;
             
             if (availableCash() > MAX_POSITION_VALUE)
             {
