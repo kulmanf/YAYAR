@@ -25,8 +25,13 @@ namespace QuantConnect.Algorithm.CSharp
         
         internal void LogDaily()
         {
-            var message = _algorithm.Time + " - FkuRiskManager - ";
-            _algorithm.Log(message);
+
+        }
+        
+        private void Log(string message)
+        {
+            var stamp = _algorithm.Time + " [FkuRiskManager] "; 
+            _algorithm.Log(stamp + message);
         }
     }
 }

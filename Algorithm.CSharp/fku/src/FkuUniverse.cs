@@ -44,8 +44,13 @@ namespace QuantConnect.Algorithm.CSharp
 
         internal void LogDaily()
         {
-            var message = _algorithm.Time + " - FkuUniverse - " + "Symbol: " + Symbol;
-            _algorithm.Log(message);
+            Log("Symbol: " + Symbol);
+        }
+        
+        private void Log(string message)
+        {
+            var stamp = _algorithm.Time + " [FkuUniverse] "; 
+            _algorithm.Log(stamp + message);
         }
 
     }

@@ -35,8 +35,12 @@ namespace QuantConnect.Algorithm.CSharp
         
         internal void LogDaily()
         {
-            var message = _algorithm.Time + " - FkuSeller - ";
-            _algorithm.Log(message);
+        }
+        
+        private void Log(string message)
+        {
+            var stamp = _algorithm.Time + " [FkuSeller] "; 
+            _algorithm.Log(stamp + message);
         }
 
         private bool IsSellWin(decimal buyPrice, decimal currentPrice)
