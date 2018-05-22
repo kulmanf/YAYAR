@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace QuantConnect.Algorithm.CSharp
 {
@@ -45,6 +46,11 @@ namespace QuantConnect.Algorithm.CSharp
         internal void LogDaily()
         {
             Log("Symbol: " + Symbol);
+        }
+        
+        internal List<Symbol> GetSymbols()
+        {
+            return new List<Symbol>{Symbol};
         }
         
         private void Log(string message)
