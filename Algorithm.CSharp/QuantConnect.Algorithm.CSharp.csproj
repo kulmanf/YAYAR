@@ -100,6 +100,7 @@
     <Compile Include="fku\src\FkuBuyer.cs" />
     <Compile Include="fku\src\FkuConfiguration.cs" />
     <Compile Include="fku\src\FkuExecutor.cs" />
+    <Compile Include="fku\src\FkuInsightSignal.cs" />
     <Compile Include="fku\src\FkuPortfolio.cs" />
     <Compile Include="fku\src\FkuRiskManager.cs" />
     <Compile Include="fku\src\FkuSeller.cs" />

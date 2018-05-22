@@ -1,4 +1,5 @@
-﻿using QuantConnect.Brokerages;
+﻿using System.Linq;
+using QuantConnect.Brokerages;
 using QuantConnect.Data;
 
 namespace QuantConnect.Algorithm.CSharp
