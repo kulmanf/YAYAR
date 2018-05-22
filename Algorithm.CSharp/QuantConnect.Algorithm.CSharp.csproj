@@ -105,6 +105,9 @@
     <Compile Include="fku\src\FkuRiskManager.cs" />
     <Compile Include="fku\src\FkuSeller.cs" />
     <Compile Include="fku\src\FkuUniverse.cs" />
+    <Compile Include="fku\src\Indicators\FkuDayTimeIndicator.cs" />
+    <Compile Include="fku\src\Indicators\FkuRsiIndicator.cs" />
+    <Compile Include="fku\src\Indicators\FkuYesterdayIndicator.cs" />
     <Compile Include="ForexInternalFeedOnDataHigherResolutionRegressionAlgorithm.cs" />
     <Compile Include="ForexInternalFeedOnDataSameResolutionRegressionAlgorithm.cs" />
     <Compile Include="RollingWindowAlgorithm.cs" />

@@ -8,11 +8,22 @@ namespace QuantConnect.Algorithm.CSharp
     {
         private QCAlgorithm _algorithm;
         private List<Symbol> _symbols;
+        private FkuDayTimeIndicator _dayTimeIndicator;
+        private Dictionary<Symbol, FkuYesterdayIndicator> _yesterdayIndicators;
+        private Dictionary<Symbol, FkuRsiIndicator> _rsiIndicators;
 
         internal void Initialize(QCAlgorithm algorithm, List<Symbol> symbols)
         {
             _algorithm = algorithm;
             _symbols = symbols;
+            _dayTimeIndicator = new FkuDayTimeIndicator(algorithm);
+            _yesterdayIndicators = new Dictionary<Symbol, FkuYesterdayIndicator>();
+            _rsiIndicators = new Dictionary<Symbol, FkuRsiIndicator>();
+            foreach (var symbol in _symbols)
+            {
+                _yesterdayIndicators.Add(symbol, new FkuYesterdayIndicator(symbol));
+                _rsiIndicators.Add(symbol, new FkuRsiIndicator());
+            }
         }
 
         internal List<FkuInsightSignal> OnData(Slice data)
@@ -32,12 +43,17 @@ namespace QuantConnect.Algorithm.CSharp
 
         private FkuInsightSignal InsightForSymbol(Symbol symbol, TradeBar bar)
         {
-            // Yesterday green
-            // RSI < 30
-            // TimeRange 09:30h - 10:00h
+            var isInTime = _dayTimeIndicator.IsBetween0930And1000();
+            var isBelow30 = _rsiIndicators[symbol].IsBelow30();
+            var isYesterdayGreen = _yesterdayIndicators[symbol].IsYesterdayGreen();
+
+            Log("isInTime:" + isInTime);
+            Log("isBelow30:" + isBelow30);
+            Log("isYesterdayGreen:" + isYesterdayGreen);
             
+            var advice = isInTime && isBelow30 && isYesterdayGreen ? Advice.Buy : Advice.None;
             
-            return new FkuInsightSignal(symbol, Advice.None, 0);
+            return new FkuInsightSignal(symbol, advice, 1);
         }
 
         private void Log(string message)
