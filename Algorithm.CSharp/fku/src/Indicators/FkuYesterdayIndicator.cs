@@ -7,7 +7,7 @@ namespace QuantConnect.Algorithm.CSharp
         private readonly Symbol _symbol;
         private readonly QCAlgorithm _algorithm;
 
-        public FkuYesterdayIndicator(Symbol symbol, QCAlgorithm algorithm)
+        public FkuYesterdayIndicator(QCAlgorithm algorithm, Symbol symbol)
         {
             _symbol = symbol;
             _algorithm = algorithm;
