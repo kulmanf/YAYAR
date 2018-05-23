@@ -16,9 +16,11 @@ namespace QuantConnect.Algorithm.CSharp
             _symbol = symbol;
         }
 
-        internal void OnBuy(Slice data, List<FkuAlpha.Signal> signals, int positionSize)
+        internal void OnBuy(Slice data, List<FkuInsightSignal> signals, int positionSize)
         {
-            if (signals.Count == 0) return;
+            var signal = signals.Last();
+            
+            if(signal.Advice == Advice.None) return;
             
             if (positionSize == 0) return;
             
