@@ -4,7 +4,7 @@
     {
         public bool IsBelow30()
         {
-            throw new System.NotImplementedException();
+            return false;
         }
     }
 }

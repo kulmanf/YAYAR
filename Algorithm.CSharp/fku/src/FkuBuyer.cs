@@ -21,7 +21,7 @@ namespace QuantConnect.Algorithm.CSharp
             _rsiIndicators = new Dictionary<Symbol, FkuRsiIndicator>();
             foreach (var symbol in _symbols)
             {
-                _yesterdayIndicators.Add(symbol, new FkuYesterdayIndicator(symbol));
+                _yesterdayIndicators.Add(symbol, new FkuYesterdayIndicator(symbol, algorithm));
                 _rsiIndicators.Add(symbol, new FkuRsiIndicator());
             }
         }

@@ -1,14 +1,23 @@
-﻿namespace QuantConnect.Algorithm.CSharp
+﻿using System.Linq;
+
+namespace QuantConnect.Algorithm.CSharp
 {
     public class FkuYesterdayIndicator
     {
-        public FkuYesterdayIndicator(Symbol symbol)
+        private readonly Symbol _symbol;
+        private readonly QCAlgorithm _algorithm;
+
+        public FkuYesterdayIndicator(Symbol symbol, QCAlgorithm algorithm)
         {
+            _symbol = symbol;
+            _algorithm = algorithm;
         }
 
         public bool IsYesterdayGreen()
         {
-            throw new System.NotImplementedException();
+            var bars = _algorithm.History(_symbol, 1, Resolution.Daily);
+            var yesterday = bars.Last();
+            return yesterday.Close > yesterday.Open;
         }
     }
 }
