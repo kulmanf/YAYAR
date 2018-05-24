@@ -1,12 +1,10 @@
-﻿using System;
-using Accord;
-
+﻿
 namespace QuantConnect.Algorithm.CSharp
 {
     public class FkuDayTimeIndicator
     {
         private QCAlgorithm _algorithm;
-        
+
         public FkuDayTimeIndicator(QCAlgorithm algorithm)
         {
             _algorithm = algorithm;

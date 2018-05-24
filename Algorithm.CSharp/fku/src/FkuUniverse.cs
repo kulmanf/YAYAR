@@ -23,11 +23,11 @@ namespace QuantConnect.Algorithm.CSharp
             switch (fkuMode)
             {
                 case FkuMode.InteractiveBrokers:
-                    Symbol = Symbol.Create("FB", SecurityType.Equity, Market.USA);
+                    Symbol = Symbol.Create("MU", SecurityType.Equity, Market.USA);
                     algorithm.AddEquity(Symbol, Resolution.Minute);
                     break;
                 case FkuMode.Backtest:
-                    Symbol = Symbol.Create("FB", SecurityType.Equity, Market.USA);
+                    Symbol = Symbol.Create("MU", SecurityType.Equity, Market.USA);
                     algorithm.SetStartDate(2018, 04, 01); //Set Start Date
                     algorithm.SetEndDate(2018, 04, 30); //Set End Date
                     algorithm.AddEquity(Symbol, Resolution.Minute);
