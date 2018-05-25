@@ -12,6 +12,6 @@ namespace QuantConnect.Algorithm.CSharp
 
     internal class FkuTickers
     {
-        public readonly List<string> Tickers = new List<string>{"FB", "MU"};
+        public readonly List<string> Tickers = new List<string>{"FB", "MU", "MTCH", "TSLA"};
     }
 }
