@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QuantConnect.Algorithm.CSharp
 {
@@ -14,43 +15,40 @@ namespace QuantConnect.Algorithm.CSharp
     {
         private QCAlgorithm _algorithm;
         
-        internal Symbol Symbol { get; private set; }
+        internal List<Symbol> Symbols { get; private set; }
         
         internal void Initialize(QCAlgorithm algorithm, FkuMode fkuMode)
         {
             _algorithm = algorithm;
-            
+            var tickers = new FkuTickers().Tickers;
+            var symbols = tickers.Select(ticker => Symbol.Create(ticker, SecurityType.Equity, Market.USA)).ToList();
+         
             switch (fkuMode)
             {
                 case FkuMode.InteractiveBrokers:
-                    Symbol = Symbol.Create("MU", SecurityType.Equity, Market.USA);
-                    algorithm.AddEquity(Symbol, Resolution.Minute);
+                    Symbols = symbols;
                     break;
                 case FkuMode.Backtest:
-                    Symbol = Symbol.Create("MU", SecurityType.Equity, Market.USA);
+                    Symbols = symbols;
                     algorithm.SetStartDate(2018, 04, 01); //Set Start Date
                     algorithm.SetEndDate(2018, 04, 30); //Set End Date
-                    algorithm.AddEquity(Symbol, Resolution.Minute);
                     break;
                 case FkuMode.Regression:
-                    Symbol = Symbol.Create("SPY", SecurityType.Equity, Market.USA);
+                    var spy = Symbol.Create("SPY", SecurityType.Equity, Market.USA);
+                    Symbols = new List<Symbol>{spy};
                     algorithm.SetStartDate(2013, 10, 07); //Set Start Date
                     algorithm.SetEndDate(2013, 10, 11); //Set End Date
-                    algorithm.AddEquity("SPY", Resolution.Minute);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(fkuMode), fkuMode, null);
+                    throw new ArgumentOutOfRangeException();
             }
+            
+            Symbols.ForEach(symbol => algorithm.AddEquity(symbol));
         }
 
         internal void LogDaily()
         {
-            Log("Symbol: " + Symbol);
-        }
-        
-        internal List<Symbol> GetSymbols()
-        {
-            return new List<Symbol>{Symbol};
+            Log("Symbols: " + Symbols);
         }
         
         private void Log(string message)

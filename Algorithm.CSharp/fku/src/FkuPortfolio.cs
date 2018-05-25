@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using QuantConnect.Data;
 using QuantConnect.Orders;
@@ -13,28 +14,32 @@ namespace QuantConnect.Algorithm.CSharp
         private SecurityPortfolioManager _portfolioManager;
         private SecurityTransactionManager _transactionManager;
         private QCAlgorithm _algorithm;
-        private Symbol _symbol;
+        private List<Symbol> _symbols;
 
-        internal void Initialize(QCAlgorithm algorithm, Symbol symbol)
+        internal void Initialize(QCAlgorithm algorithm, List<Symbol> symbols)
         {
             _algorithm = algorithm;
             _portfolioManager = algorithm.Portfolio;
             _transactionManager = algorithm.Transactions;
-            _symbol = symbol;
+            _symbols = symbols;
         }
 
-        internal int OnData(Slice data)
+        internal Dictionary<Symbol, int> OnData(Slice data)
         {
-            if (_portfolioManager.Invested) return 0;
-
-            if (_transactionManager.GetOpenOrders().Count > 0) return 0;
+            var positionSizes = new Dictionary<Symbol, int>();
+            _symbols.ForEach(symbol => positionSizes.Add(symbol, 0));
             
-            if (availableCash() > MAX_POSITION_VALUE)
+            foreach (var symbol in _symbols)
             {
-                var price = data.Bars[_symbol].Price;
-                return postionSize(price);
-            }
-            return 0;
+                if (_portfolioManager.ContainsKey(symbol)) continue;
+
+                if (availableCash() > MAX_POSITION_VALUE)
+                {
+                    var price = data.Bars[symbol].Price;
+                    positionSizes[symbol] = postionSize(price);
+                }
+            }    
+            return positionSizes;
         }
             
         internal void LogDaily()

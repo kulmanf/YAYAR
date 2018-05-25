@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Accord;
+using Accord.Math;
 using QuantConnect.Data;
 
 namespace QuantConnect.Algorithm.CSharp
@@ -8,46 +10,51 @@ namespace QuantConnect.Algorithm.CSharp
     public class FkuExecutor
     {
         private QCAlgorithm _algorithm;
-        private Symbol _symbol; 
+        private List<Symbol> _symbols;
 
-        internal void Initialize(QCAlgorithm algorithm, Symbol symbol)
+        internal void Initialize(QCAlgorithm algorithm, List<Symbol> symbols)
         {
             _algorithm = algorithm;
-            _symbol = symbol;
+            _symbols = symbols;
         }
 
-        internal void OnBuy(Slice data, List<FkuInsightSignal> signals, int positionSize)
+        internal void OnBuy(Slice data, List<FkuInsightSignal> signals, Dictionary<Symbol, int> positionSizes)
         {
-            var signal = signals.Last();
-            
-            if(signal.Advice == Advice.None) return;
-            
-            if (positionSize == 0) return;
-            
-            if (!_algorithm.IsMarketOpen(_symbol)) return;
+            foreach (var signal in signals)
+            {
+                var symbol = signal.Symbol;
+                var size = positionSizes[signal.Symbol];
 
-            if(_algorithm.Portfolio.Invested) return;
+                if (_algorithm.Transactions.GetOpenOrders().Count > 0) return;
 
+                if (signal.Advice == Advice.None) continue;
+
+                if (positionSizes[symbol] == 0) continue;
+
+                if (!_algorithm.IsMarketOpen(symbol)) continue;
+
+                var orderTicket = _algorithm.MarketOrder(symbol, size);
+                Log("Ordered: " + orderTicket.Symbol + " " + orderTicket.Quantity);
+            }
+        }
+
+        internal void OnSell(List<FkuInsightSignal> signals)
+        {
             if (_algorithm.Transactions.GetOpenOrders().Count > 0) return;
 
-            var orderTicket = _algorithm.MarketOrder(_symbol, positionSize);
-            Log("Ordered: " + orderTicket.Symbol + " " + orderTicket.Quantity);
+            foreach (var signal in signals)
+            {
+                var symbol = signal.Symbol;
+
+                if (signal.Advice != Advice.Sell) continue;
+
+                if (!_algorithm.IsMarketOpen(symbol)) continue;
+
+                _algorithm.SetHoldings(symbol, 0);
+                Log("Set holdings to zero: " + symbol);
+            }
         }
 
-        internal void OnSell(List<bool> signals)
-        {
-            if (!signals.Contains(true)) return;
-            
-            if (!_algorithm.IsMarketOpen(_symbol)) return;
-
-            if(!_algorithm.Portfolio.Invested) return;
-
-            if (_algorithm.Transactions.GetOpenOrders().Count > 0) return;
-
-            _algorithm.SetHoldings(_symbol, 0);
-            Log("Set holdings to zero: " + _symbol);
-        }
-        
         internal void LogDaily()
         {
             Log("Invested: " + _algorithm.Portfolio.Invested);
@@ -56,7 +63,7 @@ namespace QuantConnect.Algorithm.CSharp
 
         private void Log(string message)
         {
-            var stamp = _algorithm.Time + " [FkuExecutor] "; 
+            var stamp = _algorithm.Time + " [FkuExecutor] ";
             _algorithm.Log(stamp + message);
         }
     }

@@ -47,9 +47,7 @@ namespace QuantConnect.Algorithm.CSharp
             var isBelow30 = _rsiIndicators[symbol].IsBelow30();
             var isYesterdayGreen = _yesterdayIndicators[symbol].IsYesterdayGreen();
 
-            Log("isInTime:" + isInTime);
-            Log("isBelow30:" + isBelow30);
-            Log("isYesterdayGreen:" + isYesterdayGreen);
+            Log(symbol + " isInTime: " + isInTime + " isBelow30: " + isBelow30 + " isYesterdayGreen: " + isYesterdayGreen);
             
             var advice = isInTime && isBelow30 && isYesterdayGreen ? Advice.Buy : Advice.None;
             

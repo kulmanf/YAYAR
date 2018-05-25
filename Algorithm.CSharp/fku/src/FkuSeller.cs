@@ -20,9 +20,9 @@ namespace QuantConnect.Algorithm.CSharp
             _portfolioManager = algorithm.Portfolio;
         }
 
-        internal List<bool> OnData(Slice data)
+        internal List<FkuInsightSignal> OnData(Slice data)
         {
-            if (!_portfolioManager.Invested) return new List<bool>();
+            if (!_portfolioManager.Invested) return new List<FkuInsightSignal>();
 
             var securityHoldings = _portfolioManager.Values;
             return securityHoldings.Where(securityHolding =>
@@ -30,7 +30,7 @@ namespace QuantConnect.Algorithm.CSharp
                     var isWin = IsSellWin(securityHolding.AveragePrice, securityHolding.Price);
                     var isStop = IsSellStop(securityHolding.AveragePrice, securityHolding.Price);
                     return isWin || isStop;
-                }).Select(securityHolding => true).ToList();
+                }).Select(securityHolding => new FkuInsightSignal(securityHolding.Symbol, Advice.Sell, 1)).ToList();
         }
         
         internal void LogDaily()

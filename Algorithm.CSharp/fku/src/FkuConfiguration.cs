@@ -1,4 +1,6 @@
-﻿namespace QuantConnect.Algorithm.CSharp
+﻿using System.Collections.Generic;
+
+namespace QuantConnect.Algorithm.CSharp
 {
     internal static class FkuConfiguration
     {
@@ -6,5 +8,10 @@
         
         public const decimal WinPercent = 1; // 1%
         public const decimal LosePercent = -0.5m;
+    }
+
+    internal class FkuTickers
+    {
+        public readonly List<string> Tickers = new List<string>{"FB", "MU"};
     }
 }

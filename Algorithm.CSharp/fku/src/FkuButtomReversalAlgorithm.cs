@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using QuantConnect.Brokerages;
+﻿using QuantConnect.Brokerages;
 using QuantConnect.Data;
 
 namespace QuantConnect.Algorithm.CSharp
@@ -18,10 +17,10 @@ namespace QuantConnect.Algorithm.CSharp
             SetCash(10000);
             SetBrokerageModel(BrokerageName.InteractiveBrokersBrokerage, AccountType.Cash);
             _universe.Initialize(this, FkuConfiguration.Environment);
-            _portfolio.Initialize(this, _universe.Symbol);
-            _buyer.Initialize(this, _universe.GetSymbols());
+            _portfolio.Initialize(this, _universe.Symbols);
+            _buyer.Initialize(this, _universe.Symbols);
             _seller.Initialize(this);
-            _executor.Initialize(this, _universe.Symbol);
+            _executor.Initialize(this, _universe.Symbols);
             _risk.Initialize(this);
 
             Schedule.On(DateRules.EveryDay(), TimeRules.At(8,0), () =>
@@ -37,10 +36,10 @@ namespace QuantConnect.Algorithm.CSharp
 
         public override void OnData(Slice data)
         {
-            var positionSize = _portfolio.OnData(data);
+            var positionSizes = _portfolio.OnData(data);
             var buySignals = _buyer.OnData(data);
             var sellSignals = _seller.OnData(data);
-            _executor.OnBuy(data, buySignals, positionSize);
+            _executor.OnBuy(data, buySignals, positionSizes);
             _executor.OnSell(sellSignals);
             _risk.OnData(data);
         }
