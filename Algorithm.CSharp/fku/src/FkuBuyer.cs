@@ -31,6 +31,8 @@ namespace QuantConnect.Algorithm.CSharp
             var signals = new List<FkuInsightSignal>();
             foreach (var symbol in _symbols)
             {
+                if(!data.Bars.ContainsKey(symbol)) continue;
+                
                 var signal = InsightForSymbol(symbol, data.Bars[symbol]);
                 signals.Add(signal);
             }
