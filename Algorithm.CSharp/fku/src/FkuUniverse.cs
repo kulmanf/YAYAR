@@ -43,7 +43,7 @@ namespace QuantConnect.Algorithm.CSharp
                     throw new ArgumentOutOfRangeException();
             }
             
-            Symbols.ForEach(symbol => algorithm.AddEquity(symbol));
+            Symbols.ForEach(symbol => algorithm.AddEquity(symbol, extendedMarketHours: true));
         }
 
         internal void LogDaily()
