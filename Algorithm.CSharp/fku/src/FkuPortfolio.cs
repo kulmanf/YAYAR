@@ -31,9 +31,7 @@ namespace QuantConnect.Algorithm.CSharp
             
             foreach (var symbol in _symbols)
             {
-                if (_portfolioManager.ContainsKey(symbol)) continue;
-
-                if (availableCash() > MAX_POSITION_VALUE)
+                if (availableCash() > MAX_POSITION_VALUE && data.Bars.ContainsKey(symbol))
                 {
                     var price = data.Bars[symbol].Price;
                     positionSizes[symbol] = postionSize(price);

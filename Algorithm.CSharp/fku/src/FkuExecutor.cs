@@ -20,6 +20,20 @@ namespace QuantConnect.Algorithm.CSharp
 
         internal void OnBuy(Slice data, List<FkuInsightSignal> signals, Dictionary<Symbol, int> positionSizes)
         {
+            signals.ForEach(signal =>
+            {
+                if (signal.Advice == Advice.Buy)
+                {
+                    Log(signal.Symbol + " " + signal.Advice + " " + signal.Strength);
+                    
+                    foreach (var positionSizesKey in positionSizes.Keys)
+                    {
+                        Log("position size: " + positionSizesKey + " " + positionSizes[positionSizesKey]);
+                    }
+                }
+            });
+
+
             foreach (var signal in signals)
             {
                 var symbol = signal.Symbol;

@@ -31,11 +31,12 @@ namespace QuantConnect.Algorithm.CSharp
             var signals = new List<FkuInsightSignal>();
             foreach (var symbol in _symbols)
             {
-                if(!data.Bars.ContainsKey(symbol)) continue;
-                
+                if (!data.Bars.ContainsKey(symbol)) continue;
+
                 var signal = InsightForSymbol(symbol, data.Bars[symbol]);
                 signals.Add(signal);
             }
+
             return signals;
         }
 
@@ -49,10 +50,16 @@ namespace QuantConnect.Algorithm.CSharp
             var isBelow30 = _rsiIndicators[symbol].IsBelow30();
             var isYesterdayGreen = _yesterdayIndicators[symbol].IsYesterdayGreen();
 
-            Log(symbol + " isInTime: " + isInTime + " isBelow30: " + isBelow30 + " isYesterdayGreen: " + isYesterdayGreen);
-            
+            if (isInTime && isBelow30 && isYesterdayGreen)
+            {
+                Log(symbol
+                    + " isInTime: " + isInTime
+                    + " isBelow30: " + isBelow30
+                    + " isYesterdayGreen: " + isYesterdayGreen);
+            }
+
             var advice = isInTime && isBelow30 && isYesterdayGreen ? Advice.Buy : Advice.None;
-            
+
             return new FkuInsightSignal(symbol, advice, 1);
         }
 
